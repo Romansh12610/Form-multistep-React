@@ -1,0 +1,24 @@
+@use './scss/globals/index';
+
+.first-step {
+    display: flex;
+    flex-flow: column nowrap;
+    gap: 15px;
+    background-color: var(--light-blue);
+
+    &__h2 {
+        font-size: 32px;
+    }
+
+    &__p {
+
+    }
+
+    &__label {
+
+    }
+
+    &__input {
+        width: 30%;
+    }
+}

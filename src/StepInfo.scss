@@ -1,0 +1,21 @@
+@use './scss/globals/index';
+
+.step-info {
+    display: flex;
+    flex-flow: column nowrap;
+    gap: 15px;
+
+    &__item {
+        display: flex;
+        gap: 15px;
+    }
+
+    &__number {
+
+    }
+
+    &__titles {
+        display: flex;
+        flex-direction: column;
+    }
+}
