@@ -17,4 +17,12 @@ body {
 h1, h2 {
     line-height: 1.1;
     letter-spacing: 1px;
+    font-family: var(--font-secondary);
+}
+
+input, button {
+    font: inherit;
+    background: inherit;
+    outline: none;
+    border: none;
 }

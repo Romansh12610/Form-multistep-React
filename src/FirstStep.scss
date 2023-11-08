@@ -1,24 +1,44 @@
 @use './scss/globals/index';
+@use './scss/utils/index' as *;
 
 .first-step {
     display: flex;
     flex-flow: column nowrap;
-    gap: 15px;
-    background-color: var(--light-blue);
 
     &__h2 {
-        font-size: 32px;
+        font-size: rem(42);
+        font-weight: 700;
+        letter-spacing: -0.5px;
+        color: var(--marine-blue);
+        margin: rem(10) 0 rem(20) 0;
     }
 
     &__p {
-
+        color: var(--cool-gray);
+        font-size: rem(17);
+        font-family: var(--font-secondary);
+        margin-bottom: rem(40);
     }
 
     &__label {
-
+        color: var(--marine-blue);
+        font-size: rem(18);
+        margin-bottom: rem(10);
+        width: max-content;
     }
 
     &__input {
-        width: 30%;
+        font-size: rem(20);
+        font-weight: bold;
+        letter-spacing: rem(1);
+        color: var(--marine-blue);
+        padding: 1rem 0.8rem;
+        margin-bottom: rem(40);
+        border: 2px solid var(--light-gray);
+        border-radius: rem(8);
+
+        &:hover, &:focus {
+            border: 2px solid var(--purplish-blue);
+        }
     }
 }

@@ -1,0 +1,15 @@
+@use '../utils/index' as *;
+
+body {
+    display: flex;
+    justify-content: center;
+    padding-block: 8%;
+    height: 100vh;
+}
+
+.main {
+    display: flex;
+    height: 100%;
+    width: 70vw;
+    gap: rem(15);
+}

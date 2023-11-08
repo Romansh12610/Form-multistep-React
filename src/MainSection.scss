@@ -1,0 +1,8 @@
+@use './scss/utils/index' as *;
+
+.main-section {
+    width: 60%;
+    margin-inline: auto;
+    padding-inline: rem(50);
+    padding-top: rem(25);
+}
