@@ -18,12 +18,13 @@
         font-size: rem(17);
         font-family: var(--font-secondary);
         margin-bottom: rem(40);
+        white-space: nowrap; // only desktop
     }
 
     &__label {
         color: var(--marine-blue);
         font-size: rem(18);
-        margin-bottom: rem(10);
+        margin-bottom: rem(5);
         width: max-content;
     }
 
@@ -33,8 +34,8 @@
         letter-spacing: rem(1);
         color: var(--marine-blue);
         padding: 1rem 0.8rem;
-        margin-bottom: rem(40);
-        border: 2px solid var(--light-gray);
+        margin-bottom: rem(25);
+        border: rem(2) solid var(--light-gray);
         border-radius: rem(8);
 
         &:hover, &:focus {

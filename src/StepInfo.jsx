@@ -1,9 +1,16 @@
 import Step from "./Step";
 import './StepInfo.scss';
+import bgSidebar from './assets/images/bg-sidebar-desktop.svg';
 
 export default function StepInfo() {
     return (
         <section className="step-info">
+            <img
+                className="step-info__bg" 
+                src={bgSidebar} 
+                alt=""
+                role="presentation"
+            />
             <Step 
                 number={1}
                 title="Step 1"
