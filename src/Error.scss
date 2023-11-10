@@ -1,0 +1,7 @@
+@use './scss/globals/index';
+@use './scss/utils/index' as *;
+
+.error-message {
+    color: blueviolet;
+    margin-bottom: rem(25);
+}

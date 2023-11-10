@@ -4,9 +4,9 @@
 .step-info {
     display: flex;
     flex-flow: column nowrap;
-    gap: 15px;
-    margin: rem(15) 0 rem(15) rem(10);
-    padding-left: rem(50);
+    gap: rem(15);
+    margin: rem(15) 0 0 rem(15);
+    padding-left: 2vw;
     padding-top: rem(50);
     height: 100%;
     width: 30%;
@@ -14,16 +14,16 @@
 
     &__bg {
         position: absolute;
-        height: auto;
-        max-height: 94%;
-        width: 100%;
-        top: rem(0);
-        left: rem(0);
+        height: rem(615);
+        width: rem(300);
+        top: 0;
+        left: 0;
         margin-block: auto;
         display: block;
     }
 
     &__item {
+        position: relative;
         display: flex;
         align-items: center;
         gap: rem(20);
@@ -42,7 +42,8 @@
         font-size: 1.2rem;
         font-weight: bold;
 
-        &--current {
+        &.current {
+            color: var(--marine-blue);
             background-color: var(--light-blue);
         }
     }

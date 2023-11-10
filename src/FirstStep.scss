@@ -4,6 +4,7 @@
 .first-step {
     display: flex;
     flex-flow: column nowrap;
+    margin-right: 5%;
 
     &__h2 {
         font-size: rem(42);
@@ -31,12 +32,20 @@
     &__input {
         font-size: rem(20);
         font-weight: bold;
-        letter-spacing: rem(1);
+        font-family: var(--font-primary);
+        letter-spacing: rem(0.5);
         color: var(--marine-blue);
         padding: 1rem 0.8rem;
-        margin-bottom: rem(25);
         border: rem(2) solid var(--light-gray);
         border-radius: rem(8);
+        width: 100%;
+
+        &::placeholder {
+            font-family: var(--font-secondary);
+            font-weight: bold;
+            opacity: 0.3;
+            letter-spacing: 0;
+        }
 
         &:hover, &:focus {
             border: 2px solid var(--purplish-blue);

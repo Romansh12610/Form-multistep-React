@@ -3,6 +3,35 @@
 .main-section {
     width: 50%;
     margin-inline: auto;
-    padding-inline: rem(50);
+    padding-inline: rem(20);
     padding-top: rem(25);
+
+    &__form {
+        width: 100%;
+        height: 100%;
+        position: relative;
+    }
+
+    &__fieldset {
+        border: none;
+    }
+
+    &__next {
+        position: absolute;
+        bottom: rem(50);
+        right: rem(-10);
+        width: rem(130);
+        height: rem(50);
+        background-color: var(--marine-blue);
+        color: var(--white);
+        font-family: var(--font-secondary);
+        font-size: rem(17);
+        font-weight: 500;
+        border-radius: rem(10);
+        cursor: pointer;
+
+        &:hover, &:focus {
+            background-color: var(--purplish-blue);
+        }
+    }
 }

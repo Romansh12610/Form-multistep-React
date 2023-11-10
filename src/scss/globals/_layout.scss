@@ -3,16 +3,15 @@
 body {
     display: flex;
     justify-content: center;
-    padding-block: 8%;
+    align-items: center;
     height: 100vh;
     background-color: var(--magnolia);
 }
 
 .main {
     display: flex;
-    height: 100%;
-    width: 55vw;
-    gap: rem(15);
+    height: rem(650);
+    width: clamp(rem(850), 55vw, rem(950));
     background-color: var(--white);
     border-radius: rem(20);
 }
