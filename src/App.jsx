@@ -8,7 +8,7 @@ export default function App() {
 
   function handleStep(e) {
     e.preventDefault();
-	setStep(prevStep => (prevStep + 1) % stepLength);
+	  setStep(prevStep => (prevStep + 1) % stepLength);
   }   
 
   return (

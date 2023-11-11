@@ -18,7 +18,7 @@
         color: var(--cool-gray);
         font-size: rem(17);
         font-family: var(--font-secondary);
-        margin-bottom: rem(40);
+        margin-bottom: rem(25);
         white-space: nowrap; // only desktop
     }
 
@@ -39,6 +39,10 @@
         border: rem(2) solid var(--light-gray);
         border-radius: rem(8);
         width: 100%;
+
+        &:invalid {
+            border: 2px solid var(--strawberry-red);
+        }
 
         &::placeholder {
             font-family: var(--font-secondary);

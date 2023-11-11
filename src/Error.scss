@@ -2,6 +2,11 @@
 @use './scss/utils/index' as *;
 
 .error-message {
-    color: blueviolet;
-    margin-bottom: rem(25);
+    margin-bottom: rem(10);
+    font-size: rem(16);
+    color: var(--strawberry-red);
+
+    &.hide {
+        visibility: hidden;
+    }
 }

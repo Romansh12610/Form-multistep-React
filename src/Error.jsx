@@ -1,10 +1,12 @@
-import { useState } from 'react';
+import { useState, forwardRef } from 'react';
 import './Error.scss';
 
-export default function Error() {
+export const Error = forwardRef((props, ref) => {
     return (
         <span
-            className='error-message'
-        >I'm error</span>
+            ref={ref}
+            className='error-message hide'
+            aria-live='polite'
+        >Lorem ipsum dolor sit, amet consectetur adipisicing elit. Sint veritatis sit natus </span>
     )
-}
+}) 
