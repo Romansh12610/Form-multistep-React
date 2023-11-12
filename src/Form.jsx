@@ -1,25 +1,32 @@
-import { useState } from 'react';
+import { useState, useContext } from 'react';
+import { StepContext } from './App';
 import FirstStep from './FirstStep';
+import SecondStep from './SecondStep';
 import './MainSection.scss';
 
-export default function Form( { step, handleStep } ) {
+export default function Form() {
+    const step = useContext(StepContext);
+    const currentStep = step == 0 ? (<FirstStep />)
+            : (<SecondStep />);
+
     return (
         <section className='main-section'>
             <form className='main-section__form' noValidate>
                 <fieldset className='main-section__fieldset'>
-                    <FirstStep />
+                    {currentStep}
                 </fieldset> 
-                <NextButton handleStep={handleStep} />
             </form>
         </section>
     )
 }
 
-function NextButton({ handleStep }) {
+
+export function NextButton({ handleClick }) {
+
     return (
         <button 
             className='main-section__next'
-            onClick={handleStep}
+            onClick={handleClick}
         >Next Step</button>
     )
 }

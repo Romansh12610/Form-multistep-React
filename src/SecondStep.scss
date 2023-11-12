@@ -1,0 +1,58 @@
+@use './scss/globals/index';
+@use './scss/utils/index' as *;
+
+.second-step {
+
+    &__h2 {
+        font-size: rem(42);
+        font-weight: 700;
+        letter-spacing: -0.5px;
+        color: var(--marine-blue);
+        margin: rem(10) 0 rem(20) 0;
+    }   
+
+    &__p {
+        color: var(--cool-gray);
+        font-size: rem(17);
+        font-family: var(--font-secondary);
+        margin-bottom: rem(25);
+        white-space: nowrap; // only desktop
+    }
+
+    &__card-section {
+        display: flex;
+        gap: rem(30);
+        margin-top: rem(30);
+    }
+
+    &__card {
+        display: flex;
+        flex-direction: column;
+        flex-wrap: nowrap;
+        flex: 1 1 auto;
+        width: rem(130);
+        padding: rem(10);
+        border: rem(2) solid var(--light-gray);
+        border-radius: rem(15);
+
+        &:hover, &:focus {
+            border: rem(2) solid var(--purplish-blue);
+        }
+    }
+
+    &__icon {
+        width: rem(40);
+        height: rem(40);
+    }
+
+    &__h4 {
+        font-size: rem(20);
+        font-family: var(--font-secondary);
+        color: var(--marine-blue);
+        margin-top: rem(50);
+    }
+
+    &__p {
+        margin: rem(8) 0 0 0;
+    }
+}

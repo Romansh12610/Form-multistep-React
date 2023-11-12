@@ -3,10 +3,9 @@
 
 .error-message {
     margin-bottom: rem(10);
-    font-size: rem(16);
+    font-size: rem(15);
+    font-weight: bold;
     color: var(--strawberry-red);
-
-    &.hide {
-        visibility: hidden;
-    }
+    display: block;
+    height: rem(30);
 }

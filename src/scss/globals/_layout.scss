@@ -11,7 +11,7 @@ body {
 .main {
     display: flex;
     height: rem(650);
-    width: clamp(rem(850), 55vw, rem(950));
+    width: clamp(rem(900), 55vw, rem(950));
     background-color: var(--white);
     border-radius: rem(20);
 }

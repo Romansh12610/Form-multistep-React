@@ -1,20 +1,22 @@
-import { useState } from 'react'
+import { useState, createContext } from 'react';
 import Form from './Form';
 import StepInfo from './StepInfo';
 
+// contexts
+export const StepContext = createContext(0);
+export const StepSetterContext = createContext(null);
+
 export default function App() {
   const [step, setStep] = useState(0);
-  const stepLength = 4;
-
-  function handleStep(e) {
-    e.preventDefault();
-	  setStep(prevStep => (prevStep + 1) % stepLength);
-  }   
 
   return (
     <main className='main'>
-      <StepInfo step={step}/>
-      <Form step={step} handleStep={handleStep}/>
+      <StepContext.Provider value={step}>
+        <StepSetterContext.Provider value={setStep}>
+          <StepInfo />
+          <Form />
+        </StepSetterContext.Provider>
+      </StepContext.Provider>
     </main>
   )
 }

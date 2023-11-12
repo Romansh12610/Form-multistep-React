@@ -1,8 +1,10 @@
-import { useState, useRef, forwardRef } from 'react';
+import { useState, useRef, useContext, forwardRef } from 'react';
 import './FirstStep.scss';
 import { Error } from './Error';
+import { NextButton } from './Form';
+import { StepContext, StepSetterContext } from './App';
 
-export default function FirstStep({ step }) {
+export default function FirstStep() {
     // states
     const [formData, setFormData] = useState({
         name: '',
@@ -25,7 +27,11 @@ export default function FirstStep({ step }) {
     const emailErr = emailErrorRef.current;
     const phoneErr = phoneErrorRef.current;
 
-    // handlers
+    // contexts
+    const step = useContext(StepContext);
+    const setStep = useContext(StepSetterContext);
+
+    // event handlers
     function handleChange(e) {
         const { name, value } = e.target;
 
@@ -38,7 +44,7 @@ export default function FirstStep({ step }) {
     function handleInput(e) {
         if (e.target.name == 'name') {
             if (name.validity.valid) {
-                nameErr.classList.add('hide');
+                nameErr.textContent = '';
             } else {
                 showError(name, nameErr);
             }
@@ -46,7 +52,7 @@ export default function FirstStep({ step }) {
 
         else if (e.target.name == 'email') {
             if (email.validity.valid) {
-                emailErr.classList.add('hide');
+                emailErr.textContent = '';
             } else {
                 showError(email, emailErr);
             }
@@ -54,7 +60,7 @@ export default function FirstStep({ step }) {
 
         else if (e.target.name == 'phone') {
             if (phone.validity.valid) {
-                phoneErr.classList.add('hide');
+                phoneErr.textContent = '';
             } else {
                 showError(phone, phoneErr);
             }
@@ -62,14 +68,12 @@ export default function FirstStep({ step }) {
     }
 
     function showError(input, error) {
-        error.classList.remove('hide');
         
         if (input.validity.tooShort) {
             error.textContent = `Your input is too short: current length - ${input.value.length}; expected length - ${input.minLength}`;
         }
         
         else if (input.validity.valueMissing) {
-            console.log(phoneErr);
             error.textContent = 'This field is required';
         }
 
@@ -81,6 +85,20 @@ export default function FirstStep({ step }) {
             error.textContent = `Your input is too long: current length - ${input.value.length}; expected length - ${input.maxLength}`;
         }
 
+    }
+
+    function handleFirstStep(e) {
+        e.preventDefault();
+        
+        const inputs = document.querySelectorAll('.first-step__input');
+        for (let input of inputs) {
+            if (!input.validity.valid) {
+                input.focus();
+                return;
+            }
+        }
+
+        setStep((step + 1));
     }
 
     return (
@@ -102,7 +120,8 @@ export default function FirstStep({ step }) {
                 pattern='^([A-Z]{1}[a-z]+)\s([A-Z]{1}[a-z]+)'
                 minLength='6'
             />
-            <Error 
+            <Error
+                required={false} 
                 ref={nameErrorRef}
             />
             <FormField
@@ -117,7 +136,8 @@ export default function FirstStep({ step }) {
                 pattern='^.+@[a-zA-Z]+\.[a-zA-Z]{3,5}'
                 minLength='8'
             />
-            <Error 
+            <Error
+                required={false} 
                 ref={emailErrorRef}
             />
             <FormField
@@ -129,13 +149,17 @@ export default function FirstStep({ step }) {
                 handleInput={handleInput}
                 formData={formData}
                 placeHolder='e.g. 1 234 567 890'
-                pattern='^\d{1}([\s])\(\d{3}\)\1\d{3}\1\d{2}\1\d{2}'
-                minLength='13'
-                maxLength='13'
+                pattern='^\d{1}(\s)\d{3}\1\d{3}\1\d{2}\1\d{2}'
+                minLength='15'
+                maxLength='15'
                 required='required'
             />
-            <Error 
+            <Error
+                required={true} 
                 ref={phoneErrorRef}
+            />
+            <NextButton 
+                handleClick={handleFirstStep}
             />
         </div>
     )

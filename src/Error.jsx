@@ -5,8 +5,8 @@ export const Error = forwardRef((props, ref) => {
     return (
         <span
             ref={ref}
-            className='error-message hide'
+            className='error-message'
             aria-live='polite'
-        >Lorem ipsum dolor sit, amet consectetur adipisicing elit. Sint veritatis sit natus </span>
+        >{props.required ? "This field is required" : ""}</span>
     )
 }) 

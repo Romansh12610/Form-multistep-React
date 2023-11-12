@@ -36,13 +36,9 @@
         letter-spacing: rem(0.5);
         color: var(--marine-blue);
         padding: 1rem 0.8rem;
-        border: rem(2) solid var(--light-gray);
+        border: rem(1) solid var(--light-gray);
         border-radius: rem(8);
         width: 100%;
-
-        &:invalid {
-            border: 2px solid var(--strawberry-red);
-        }
 
         &::placeholder {
             font-family: var(--font-secondary);
@@ -53,6 +49,10 @@
 
         &:hover, &:focus {
             border: 2px solid var(--purplish-blue);
+        }
+
+        &:invalid {
+            border: 2px solid var(--strawberry-red);
         }
     }
 }
