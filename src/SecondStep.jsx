@@ -6,6 +6,30 @@ import advancedIcon from './assets/images/icon-advanced.svg';
 import proIcon from './assets/images/icon-pro.svg';
 
 export default function SecondStep() {
+    const [billing, setBilling] = useState('monthly');
+
+    function handleClick() {
+        console.log("click");
+        setBilling(prevBilling => {
+            if (prevBilling == 'monthly') {
+                return 'yearly';
+            } else {
+                return 'monthly';
+            }
+        });
+    }
+
+    function handleChange(e) {
+        e.preventDefault();
+        setBilling(e.target.value);
+    }
+
+    let circleClassName = 'second-step__toggle-circle';
+    let toggleClassName = 'second-step__toggle-button';
+    if (billing == 'yearly') {
+        circleClassName += ' pressed';
+        toggleClassName += ' pressed';
+    }
 
     return (
         <div className='second-step'>
@@ -16,7 +40,13 @@ export default function SecondStep() {
                 <Card status="advanced" title="Advanced" price="4$"/>
                 <Card status="pro" title="Pro" price="6$"/>
             </div>
-            <Toggler />
+            <Toggler 
+                billing={billing}
+                handleClick={handleClick}
+                handleChange={handleChange}
+                circleClassName={circleClassName}
+                toggleClassName={toggleClassName}
+            />
             <NextButton />
         </div>
     )
@@ -36,6 +66,34 @@ function Card({ status, title, price }) {
     )
 }
 
-function Toggler() {
-    
+function Toggler({ billing, handleClick, handleChange, circleClassName, toggleClassName }) {
+    return (
+        <div className='second-step__toggle-wrapper'>
+            <label htmlFor='monthly' className='second-step__label'>Monthly</label>
+            <span 
+                className={toggleClassName} 
+                onClick={handleClick}> 
+                <input 
+                    className='second-step__input' 
+                    type='radio'      
+                    id='monthly' 
+                    name='billing'
+                    value='monthly'
+                    checked={billing === 'monthly'}
+                    onChange={handleChange}
+                />
+                <input 
+                    className='second-step__input' 
+                    type='radio' 
+                    id='yearly' 
+                    name='billing'
+                    value='yearly'
+                    checked={billing === 'yearly'}
+                    onChange={handleChange}
+                />
+                <span className={circleClassName}></span>
+            </span>
+            <label htmlFor='yearly' className='second-step__label'>Yearly</label>
+        </div>
+    )
 }

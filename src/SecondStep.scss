@@ -2,6 +2,8 @@
 @use './scss/utils/index' as *;
 
 .second-step {
+    $toggle-height: rem(22);
+    $circle-height: rem(16);
 
     &__h2 {
         font-size: rem(42);
@@ -54,5 +56,55 @@
 
     &__p {
         margin: rem(8) 0 0 0;
+    }
+
+    &__toggle-wrapper {
+        margin-top: rem(40);
+        background-color: var(--magnolia);
+        height: rem(50);
+        border-radius: rem(15);
+        padding: rem(8);
+
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: rem(15);
+    }
+
+    &__input {
+        opacity: 0;
+    }
+
+    &__toggle-button {
+        width: rem(45);
+        height: $toggle-height;
+        background-color: var(--white);
+        border-radius: rem(10);
+        position: relative;
+        transition: background-color 200ms ease-in-out;
+
+
+        &.pressed {
+            background-color: var(--pastel-blue);
+        }
+    }
+
+    &__toggle-circle {
+        background-color: var(--purplish-blue);
+        width: rem(16);
+        height: rem(16);
+        display: block;
+        position: absolute;
+        top: calc(($toggle-height - $circle-height) / 2);
+        left: rem(3);
+        border-radius: 50%;
+        border: rem(2) solid var(--strawberry-red);
+        transition: transform 200ms ease-in-out, background-color 200ms ease-in-out;
+
+        &.pressed {
+            transform: translateX(rem(23));
+            background-color: var(--white);
+            border: rem(2) solid var(--purplish-blue);            
+        }
     }
 }
