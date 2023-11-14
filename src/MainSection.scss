@@ -29,9 +29,28 @@
         font-weight: 500;
         border-radius: rem(10);
         cursor: pointer;
+        transition: background-color 150ms ease-in-out;
 
         &:hover, &:focus {
             background-color: var(--purplish-blue);
+        }
+    }
+
+    &__prev {
+        position: absolute;
+        bottom: rem(20);
+        left: 0;
+        width: rem(130);
+        height: rem(50);
+        font-family: var(--font-secondary);
+        font-size: rem(17);
+        font-weight: 500;
+        border-radius: rem(10);
+        cursor: pointer;
+        transition: all 150ms ease-in-out;
+
+        &:hover, &:focus {
+            background-color: var(--pastel-blue);
         }
     }
 }

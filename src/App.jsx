@@ -7,7 +7,7 @@ export const StepContext = createContext(0);
 export const StepSetterContext = createContext(null);
 
 export default function App() {
-  const [step, setStep] = useState(0);
+  const [step, setStep] = useState(2);
 
   return (
     <main className='main'>

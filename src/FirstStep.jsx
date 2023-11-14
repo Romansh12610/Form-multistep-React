@@ -20,13 +20,6 @@ export default function FirstStep() {
     const emailErrorRef = useRef(null);
     const phoneErrorRef = useRef(null);
 
-    const name = nameRef.current;
-    const email = emailRef.current;
-    const phone = phoneRef.current;
-    const nameErr = nameErrorRef.current;
-    const emailErr = emailErrorRef.current;
-    const phoneErr = phoneErrorRef.current;
-
     // contexts
     const step = useContext(StepContext);
     const setStep = useContext(StepSetterContext);
@@ -43,26 +36,26 @@ export default function FirstStep() {
 
     function handleInput(e) {
         if (e.target.name == 'name') {
-            if (name.validity.valid) {
-                nameErr.textContent = '';
+            if (nameRef.current.validity.valid) {
+                nameErrorRef.current.textContent = '';
             } else {
-                showError(name, nameErr);
+                showError(nameRef.current, nameErrorRef.current);
             }
         }
 
         else if (e.target.name == 'email') {
-            if (email.validity.valid) {
-                emailErr.textContent = '';
+            if (emailRef.current.validity.valid) {
+                emailErrorRef.current.textContent = '';
             } else {
-                showError(email, emailErr);
+                showError(emailRef.current, emailErrorRef.current);
             }
         }
 
         else if (e.target.name == 'phone') {
-            if (phone.validity.valid) {
-                phoneErr.textContent = '';
+            if (phoneRef.current.validity.valid) {
+                phoneErrorRef.current.textContent = '';
             } else {
-                showError(phone, phoneErr);
+                showError(phoneRef.current, phoneErrorRef.current);
             }
         }
     }

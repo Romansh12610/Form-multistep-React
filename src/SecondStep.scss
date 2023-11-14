@@ -38,6 +38,11 @@
         border-radius: rem(15);
 
         &:hover, &:focus {
+            border: rem(2) solid var(--pastel-blue);
+        }
+
+        &.chosen {
+            background-color: var(--magnolia);
             border: rem(2) solid var(--purplish-blue);
         }
     }
@@ -61,7 +66,7 @@
     &__toggle-wrapper {
         margin-top: rem(40);
         background-color: var(--magnolia);
-        height: rem(50);
+        height: rem(60);
         border-radius: rem(15);
         padding: rem(8);
 
@@ -71,17 +76,33 @@
         gap: rem(15);
     }
 
-    &__input {
-        opacity: 0;
+    &__label {
+        cursor: pointer;
+        font-size: rem(19);
+        font-weight: bold;
+        font-family: var(--font-secondary);
+        padding: rem(5);
+        color: var(--cool-gray);
+        transition: color 200ms ease-in-out, border-width 200ms ease-in-out;
+        border: rem(3) solid transparent;
+
+
+        &.chosen {
+            color: var(--purplish-blue);
+            background-color: var(--light-blue);
+            border: rem(3) solid var(--pastel-blue);
+            border-radius: rem(10);
+        }
     }
 
     &__toggle-button {
         width: rem(45);
         height: $toggle-height;
-        background-color: var(--white);
+        background-color: var(--light-gray);
         border-radius: rem(10);
         position: relative;
         transition: background-color 200ms ease-in-out;
+        cursor: pointer;
 
 
         &.pressed {
@@ -90,7 +111,7 @@
     }
 
     &__toggle-circle {
-        background-color: var(--purplish-blue);
+        background-color: var(--white);
         width: rem(16);
         height: rem(16);
         display: block;
@@ -98,13 +119,13 @@
         top: calc(($toggle-height - $circle-height) / 2);
         left: rem(3);
         border-radius: 50%;
-        border: rem(2) solid var(--strawberry-red);
+        border: rem(2) solid var(--marine-blue);
         transition: transform 200ms ease-in-out, background-color 200ms ease-in-out;
 
         &.pressed {
             transform: translateX(rem(23));
-            background-color: var(--white);
-            border: rem(2) solid var(--purplish-blue);            
+            background-color: var(--purplish-blue);
+            border: rem(2) solid var(--strawberry-red);            
         }
     }
 }
