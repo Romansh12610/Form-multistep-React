@@ -1,6 +1,7 @@
-import { useState, useRef } from 'react';
+import { useState, useRef, useContext } from 'react';
 import './SecondStep.scss';
 import { NextButton, PrevButton } from './Form';
+import { StepSetterContext } from './App';
 import arcadeIcon from './assets/images/icon-arcade.svg';
 import advancedIcon from './assets/images/icon-advanced.svg';
 import proIcon from './assets/images/icon-pro.svg';
@@ -9,9 +10,24 @@ export default function SecondStep() {
     const [plan, setPlan] = useState('');
     const [billing, setBilling] = useState('monthly');
 
+    const setStep = useContext(StepSetterContext);
+
     let arcadePrice = billing == 'monthly' ? '$9/mo' : '$90/yr';
     let advancedPrice = billing == 'monthly' ? '$12/mo' : '$120/yr';
     let proPrice = billing == 'monthly' ? '$15/mo' : '$150/yr';
+
+    // button handlers
+    function handleNextClick(e) {
+        e.preventDefault();
+
+        setStep(prevStep => prevStep + 1);
+    }
+
+    function handlePrevClick(e) {
+        e.preventDefault();
+
+        setStep(prevStep => prevStep - 1);
+    }
 
     return (
         <>
@@ -40,8 +56,8 @@ export default function SecondStep() {
                 setBilling={setBilling}
             />
         </div>
-        <NextButton />
-        <PrevButton />
+        <NextButton handleClick={handleNextClick}/>
+        <PrevButton handleClick={handlePrevClick}/>
         </>
     )
 }
