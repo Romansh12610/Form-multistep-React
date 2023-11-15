@@ -2,21 +2,18 @@ import { useState, useRef, useContext } from 'react';
 import './SecondStep.scss';
 import { NextButton, PrevButton } from './Form';
 import { StepSetterContext } from './App';
-import { BillingContext, BillingSetterContext } from './Form';
+import { BillingContext, BillingSetterContext, CardsContext, CardsSetterContext } from './Form';
 import arcadeIcon from './assets/images/icon-arcade.svg';
 import advancedIcon from './assets/images/icon-advanced.svg';
 import proIcon from './assets/images/icon-pro.svg';
 
 export default function SecondStep() {
-    const [plan, setPlan] = useState('');
-
+    // contexts
     const setStep = useContext(StepSetterContext);
     const billing = useContext(BillingContext);
     const setBilling = useContext(BillingSetterContext);
-
-    let arcadePrice = billing == 'monthly' ? '$9/mo' : '$90/yr';
-    let advancedPrice = billing == 'monthly' ? '$12/mo' : '$120/yr';
-    let proPrice = billing == 'monthly' ? '$15/mo' : '$150/yr';
+    const cards = useContext(CardsContext);
+    const setCards = useContext(CardsSetterContext);
 
     // button handlers
     function handleNextClick(e) {
@@ -31,27 +28,41 @@ export default function SecondStep() {
         setStep(prevStep => prevStep - 1);
     }
 
+    function handleCardClick(cardId) {
+        setCards(cards.map((card, id) => {
+            if (id == cardId) {
+                return {
+                    ...card,
+                    chosen: true
+                }
+            } else {
+                return {
+                    ...card,
+                    chosen: false
+                }
+            }
+        }));
+    }
+
+    const cardsArray = cards.map(card => (
+        <Card 
+            key={card.id}
+            cardId={card.id}
+            title={card.title}
+            price={billing == 'monthly' ? card.monthPrice : card.yearPrice}
+            srcImg={`${card.status}Icon`}
+            handleClick={handleCardClick}
+            chosen={card.chosen}
+        />
+    ))
+
     return (
         <>
         <div className='second-step'>
             <h2 className='second-step__h2'>Select your plan</h2>
             <p className='second-step__p'>You have the option of monthly or yearly billing.</p>
             <div className='second-step__card-section'>
-                <Card status="arcade" title="Arcade" 
-                    setPlan={setPlan}
-                    plan={plan}
-                    price={arcadePrice}
-                />
-                <Card status="advanced" title="Advanced" 
-                    setPlan={setPlan}
-                    plan={plan} 
-                    price={advancedPrice}
-                />
-                <Card status="pro" title="Pro" 
-                    setPlan={setPlan}
-                    plan={plan}
-                    price={proPrice}
-                />
+                {cardsArray}
             </div>
             <Toggler
                 billing={billing} 
@@ -64,26 +75,20 @@ export default function SecondStep() {
     )
 }
 
-function Card({ plan, setPlan, status, title, price }) {
-    const srcImg = status == 'arcade' ? arcadeIcon
-        : status == 'advanced' ? advancedIcon
-        : proIcon;
+function Card({ title, price, srcImg, handleCardClick, cardId, chosen}) {
 
-    let cardClassName = plan == status ? 'second-step__card chosen'
-        : 'second-step__card';
-    
-
-    function handleClick(e) {
-        let target = e.target.closest('div');
-
-        setPlan(target.id);
+    let cardClassName = 'second-step__card';
+    if (chosen) {
+        cardClassName += ' chosen';
     }
 
     return (
         <div className={cardClassName}
-            id={status} 
+            cardId={cardId} 
             tabIndex={0}
-            onClick={handleClick}
+            onClick={() => {
+                handleCardClick(cardId);
+            }}
         >
             <img src={srcImg} className='second-step__icon'/>
             <h4 className='second-step__h4'>{title}</h4>

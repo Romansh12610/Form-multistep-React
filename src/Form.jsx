@@ -7,12 +7,41 @@ import './MainSection.scss';
 
 export const BillingContext = createContext(null);
 export const BillingSetterContext = createContext(null);
+export const CardsContext = createContext(null);
+export const CardsSetterContext = createContext(null);
 export const PanelsContext = createContext(null);
 export const PanelsSetterContext = createContext(null);
 
 export default function Form() {
     const step = useContext(StepContext);
     const [billing, setBilling] = useState('monthly');
+    const [cards, setCards] = useState([
+        {
+            id: 0,
+            status: "arcade",
+            title: "Arcade",
+            monthPrice: "+$9/mo",
+            yearPrice: "+$90/yr",
+            chosen: false
+        },
+        {
+            id: 1,
+            status: "advanced",
+            title: "Advanced",
+            monthPrice: "+$12/mo",
+            yearPrice: "+$120/yr",
+            chosen: false
+        },
+        {
+            id: 2,
+            status: "pro",
+            title: "Pro",
+            monthPrice: "+$15/mo",
+            yearPrice: "+$150/yr",
+            chosen: false
+        }
+    ]);
+
     const [panels, setPanels] = useState([
         {   
             id: 0, 
@@ -51,11 +80,15 @@ export default function Form() {
                 <fieldset className='main-section__fieldset'>
                     <BillingContext.Provider value={billing}>
                         <BillingSetterContext.Provider value={setBilling}>
-                            <PanelsContext.Provider value={panels}>
-                                <PanelsSetterContext.Provider value={setPanels}>
-                                    {currentStep}
-                                </PanelsSetterContext.Provider>
-                            </PanelsContext.Provider>
+                            <CardsContext.Provider value={cards}>
+                                <CardsSetterContext.Provider value={setCards}>
+                                    <PanelsContext.Provider value={panels}>
+                                        <PanelsSetterContext.Provider value={setPanels}>
+                                            {currentStep}
+                                        </PanelsSetterContext.Provider>
+                                    </PanelsContext.Provider>
+                                </CardsSetterContext.Provider>
+                            </CardsContext.Provider>
                         </BillingSetterContext.Provider>
                     </BillingContext.Provider>
                 </fieldset> 

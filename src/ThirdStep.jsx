@@ -39,6 +39,7 @@ export default function ThirdStep() {
     // panels to render
     const panelsArray = panels.map((panel, id) => (
         <Panel 
+            key={id}
             title={panel.title}
             subTitle={panel.subtitle}
             panelId={id}
