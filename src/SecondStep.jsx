@@ -2,15 +2,17 @@ import { useState, useRef, useContext } from 'react';
 import './SecondStep.scss';
 import { NextButton, PrevButton } from './Form';
 import { StepSetterContext } from './App';
+import { BillingContext, BillingSetterContext } from './Form';
 import arcadeIcon from './assets/images/icon-arcade.svg';
 import advancedIcon from './assets/images/icon-advanced.svg';
 import proIcon from './assets/images/icon-pro.svg';
 
 export default function SecondStep() {
     const [plan, setPlan] = useState('');
-    const [billing, setBilling] = useState('monthly');
 
     const setStep = useContext(StepSetterContext);
+    const billing = useContext(BillingContext);
+    const setBilling = useContext(BillingSetterContext);
 
     let arcadePrice = billing == 'monthly' ? '$9/mo' : '$90/yr';
     let advancedPrice = billing == 'monthly' ? '$12/mo' : '$120/yr';

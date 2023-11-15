@@ -12,9 +12,80 @@
 
     &__p {
         color: var(--cool-gray);
-        font-size: rem(17);
+        font-size: rem(18);
         font-family: var(--font-secondary);
         margin-bottom: rem(25);
         white-space: nowrap; // only desktop
+    }
+
+    &__option-section {
+        display: flex;
+        flex-direction: column;
+        gap: rem(20);
+        height: 45vh;
+    }
+
+    &__panel {
+        display: flex;
+        align-items: center;
+        padding-inline: rem(15);
+        padding-block: rem(10);
+        height: rem(100);
+        border: rem(2) solid var(--light-gray);
+        border-radius: rem(10);
+        transition: border-color 300ms ease-in-out, background-color 150ms ease-in-out, box-shadow 150ms ease-in-out;
+        cursor: pointer;
+
+        &:hover, &:focus {
+            border: rem(2) solid var(--pastel-blue);
+            box-shadow: rem(0) rem(0) rem(4) rem(2) var(--pastel-blue);
+        }
+
+        &.chosen {
+            background-color: var(--magnolia);
+            border: rem(2) solid var(--purplish-blue);
+            box-shadow: rem(0) rem(0) rem(4) rem(2) var(--purplish-blue);
+        }
+    }
+
+    &__checkmark {
+        width: rem(25);
+        height: rem(25);
+        border-radius: rem(5);
+        border: rem(1) solid var(--light-gray);
+        margin-left: rem(8);
+        
+
+        &.chosen {
+            background-image: url('./assets/images/icon-myAnotherCheck.svg');
+            background-repeat: none;
+            background-position: center;
+        }   
+    }
+
+    &__title-wrapper {
+        margin-left: rem(30);
+        font-family: var(--font-secondary);
+    }
+
+    &__title {
+        margin-bottom: rem(6);
+        color: var(--marine-blue);
+        font-size: rem(20);
+    }
+
+    &__sub-title {
+        color: var(--cool-gray);
+        font-weight: 500;
+        font-size: rem(18);
+    }
+
+    &__price {
+        margin-left: auto;
+        margin-right: rem(15);
+        color: hsl(283, 100%, 32%);
+        font-family: var(--font-secondary);
+        font-weight: 500;
+        font-size: rem(18);
     }
 }
