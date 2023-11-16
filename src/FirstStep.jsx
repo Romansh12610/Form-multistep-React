@@ -1,16 +1,13 @@
-import { useState, useRef, useContext, forwardRef } from 'react';
+import { useRef, useContext, useEffect, forwardRef } from 'react';
 import './FirstStep.scss';
 import { Error } from './Error';
-import { NextButton } from './Form';
+import { InputContext, InputSetterContext, NextButton } from './Form';
 import { StepContext, StepSetterContext } from './App';
 
 export default function FirstStep() {
-    // states
-    const [formData, setFormData] = useState({
-        name: '',
-        email: '',
-        phone: '',
-    });
+    // contexts
+    const formData = useContext(InputContext);
+    const setFormData = useContext(InputSetterContext);
 
     // refs
     const nameRef = useRef(null);
@@ -24,6 +21,13 @@ export default function FirstStep() {
     const step = useContext(StepContext);
     const setStep = useContext(StepSetterContext);
 
+    // effect 
+    useEffect(() => {
+        showError(nameRef.current, nameErrorRef.current);
+        showError(emailRef.current, emailErrorRef.current);
+        showError(phoneRef.current, phoneErrorRef.current);
+    }, []);
+
     // event handlers
     function handleChange(e) {
         const { name, value } = e.target;
@@ -35,6 +39,7 @@ export default function FirstStep() {
     }
 
     function handleInput(e) {
+
         if (e.target.name == 'name') {
             if (nameRef.current.validity.valid) {
                 nameErrorRef.current.textContent = '';
@@ -61,13 +66,13 @@ export default function FirstStep() {
     }
 
     function showError(input, error) {
-        
-        if (input.validity.tooShort) {
-            error.textContent = `Your input is too short: current length - ${input.value.length}; expected length - ${input.minLength}`;
+
+        if (input.validity.valueMissing) {
+            error.textContent = 'This field is required';
         }
         
-        else if (input.validity.valueMissing) {
-            error.textContent = 'This field is required';
+        else if (input.validity.tooShort) {
+            error.textContent = `Your input is too short: current length - ${input.value.length}; expected length - ${input.minLength}`;
         }
 
         else if (input.validity.patternMismatch) {
@@ -112,6 +117,7 @@ export default function FirstStep() {
                 placeHolder='e.g. Stephen King'
                 pattern='^([A-Z]{1}[a-z]+)\s([A-Z]{1}[a-z]+)'
                 minLength='6'
+                required='required'
             />
             <Error
                 required={false} 
@@ -128,6 +134,7 @@ export default function FirstStep() {
                 placeHolder='e.g. stephenking@lorem.com'
                 pattern='^.+@[a-zA-Z]+\.[a-zA-Z]{3,5}'
                 minLength='8'
+                required='required'
             />
             <Error
                 required={false} 

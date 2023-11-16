@@ -3,8 +3,11 @@ import { StepContext } from './App';
 import FirstStep from './FirstStep';
 import SecondStep from './SecondStep';
 import ThirdStep from './ThirdStep';
+import ForthStep from './ForthStep';
 import './MainSection.scss';
 
+export const InputContext = createContext(null);
+export const InputSetterContext = createContext(null);
 export const BillingContext = createContext(null);
 export const BillingSetterContext = createContext(null);
 export const CardsContext = createContext(null);
@@ -14,6 +17,12 @@ export const PanelsSetterContext = createContext(null);
 
 export default function Form() {
     const step = useContext(StepContext);
+
+    const [formData, setFormData] = useState({
+        name: '',
+        email: '',
+        phone: '',
+    });
     const [billing, setBilling] = useState('monthly');
     const [cards, setCards] = useState([
         {
@@ -72,25 +81,30 @@ export default function Form() {
 
     const currentStep = step == 0 ? (<FirstStep />)
             : step == 1 ? (<SecondStep />)
-            : (<ThirdStep />);
+            : step == 2 ? (<ThirdStep />)
+            : (<ForthStep />)
 
     return (
         <section className='main-section'>
             <form className='main-section__form' noValidate>
                 <fieldset className='main-section__fieldset'>
-                    <BillingContext.Provider value={billing}>
-                        <BillingSetterContext.Provider value={setBilling}>
-                            <CardsContext.Provider value={cards}>
-                                <CardsSetterContext.Provider value={setCards}>
-                                    <PanelsContext.Provider value={panels}>
-                                        <PanelsSetterContext.Provider value={setPanels}>
-                                            {currentStep}
-                                        </PanelsSetterContext.Provider>
-                                    </PanelsContext.Provider>
-                                </CardsSetterContext.Provider>
-                            </CardsContext.Provider>
-                        </BillingSetterContext.Provider>
-                    </BillingContext.Provider>
+                    <InputContext.Provider value={formData}>
+                        <InputSetterContext.Provider value={setFormData}>
+                            <BillingContext.Provider value={billing}>
+                                <BillingSetterContext.Provider value={setBilling}>
+                                    <CardsContext.Provider value={cards}>
+                                        <CardsSetterContext.Provider value={setCards}>
+                                            <PanelsContext.Provider value={panels}>
+                                                <PanelsSetterContext.Provider value={setPanels}>
+                                                    {currentStep}
+                                                </PanelsSetterContext.Provider>
+                                            </PanelsContext.Provider>
+                                        </CardsSetterContext.Provider>
+                                    </CardsContext.Provider>
+                                </BillingSetterContext.Provider>
+                            </BillingContext.Provider>
+                        </InputSetterContext.Provider>
+                    </InputContext.Provider>
                 </fieldset> 
             </form>
         </section>
@@ -98,12 +112,12 @@ export default function Form() {
 }
 
 
-export function NextButton({ handleClick }) {
+export function NextButton({ handleClick, last = null }) {
     return (
         <button 
             className='main-section__next'
             onClick={handleClick}
-        >Next Step</button>
+        >{last ? "Confirm" : "Next Step"}</button>
     )
 }
 

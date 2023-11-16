@@ -45,12 +45,15 @@ export default function SecondStep() {
     }
 
     const cardsArray = cards.map(card => (
-        <Card 
-            key={card.id}
+        <Card
+            key={card.id} 
             cardId={card.id}
             title={card.title}
             price={billing == 'monthly' ? card.monthPrice : card.yearPrice}
-            srcImg={`${card.status}Icon`}
+            srcImg={card.status == 'arcade' ? arcadeIcon 
+                : card.status == 'advanced' ? advancedIcon
+                : proIcon
+            }
             handleClick={handleCardClick}
             chosen={card.chosen}
         />
@@ -75,7 +78,7 @@ export default function SecondStep() {
     )
 }
 
-function Card({ title, price, srcImg, handleCardClick, cardId, chosen}) {
+function Card({ title, price, srcImg, handleClick, cardId, chosen}) {
 
     let cardClassName = 'second-step__card';
     if (chosen) {
@@ -84,10 +87,10 @@ function Card({ title, price, srcImg, handleCardClick, cardId, chosen}) {
 
     return (
         <div className={cardClassName}
-            cardId={cardId} 
+            id={cardId} 
             tabIndex={0}
             onClick={() => {
-                handleCardClick(cardId);
+                handleClick(cardId);
             }}
         >
             <img src={srcImg} className='second-step__icon'/>

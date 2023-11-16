@@ -1,4 +1,4 @@
-import { useState, forwardRef } from 'react';
+import { forwardRef } from 'react';
 import './Error.scss';
 
 export const Error = forwardRef((props, ref) => {
@@ -7,6 +7,6 @@ export const Error = forwardRef((props, ref) => {
             ref={ref}
             className='error-message'
             aria-live='polite'
-        >{props.required ? "This field is required" : ""}</span>
+        ></span>
     )
 }) 

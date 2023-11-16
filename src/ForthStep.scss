@@ -1,0 +1,24 @@
+@use './scss/globals/index';
+@use './scss/utils/index' as *;
+
+.forth-step {
+    &__h2 {
+        font-size: rem(42);
+        font-weight: 700;
+        letter-spacing: -0.5px;
+        color: var(--marine-blue);
+        margin: rem(10) 0 rem(20) 0;
+    }   
+
+    &__p {
+        color: var(--cool-gray);
+        font-size: rem(18);
+        font-family: var(--font-secondary);
+        margin-bottom: rem(25);
+        white-space: nowrap; // only desktop
+    }
+
+    &__span-OK {
+        text-transform: uppercase;
+    }
+}
