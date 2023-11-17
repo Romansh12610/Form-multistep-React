@@ -3,22 +3,79 @@
 
 .forth-step {
     &__h2 {
-        font-size: rem(42);
+        font-size: rem(40);
         font-weight: 700;
         letter-spacing: -0.5px;
         color: var(--marine-blue);
-        margin: rem(10) 0 rem(20) 0;
+        margin: rem(0) 0 rem(10) 0;
     }   
 
     &__p {
         color: var(--cool-gray);
         font-size: rem(18);
         font-family: var(--font-secondary);
-        margin-bottom: rem(25);
+        margin-bottom: rem(10);
         white-space: nowrap; // only desktop
     }
 
     &__span-OK {
         text-transform: uppercase;
+    }
+
+    &__confirm-section {
+        background-color: var(--magnolia);
+        border-radius: rem(15);
+        padding: rem(5) rem(20);
+    }
+
+    &__confirm-block {
+        padding-block: rem(15);
+        display: flex;
+        align-items: center;
+        border-bottom: rem(2) solid var(--light-gray);
+
+        &:last-child {
+            border: none;
+        }
+    }
+
+    &__confirm-info {
+        display: flex;
+        flex-flow: column nowrap;
+        gap: rem(10);
+    }
+
+    &__title {
+        font-family: var(--font-secondary);
+        color: var(--marine-blue);
+        font-size: rem(22);
+    }
+
+    &__selected-list {
+        list-style: none;
+        margin-left: rem(20);
+
+        & > li {
+            margin-bottom: rem(5);
+            color: var(--purplish-blue);
+        }
+    }
+
+    &__anchor {
+        cursor: pointer;
+        color: #e09353;
+        font-weight: bold;
+        transition: text-decoration 200ms ease-in-out;
+
+        &:hover, &:focus {
+            text-decoration: rem(2) solid underline var(--purplish-blue);
+        }
+    }
+
+    &__price {
+        margin-left: auto;
+        color: var(--purplish-blue);
+        font-weight: bold;
+        font-family: var(--font-secondary);
     }
 }

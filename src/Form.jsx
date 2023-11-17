@@ -58,15 +58,23 @@ export default function Form() {
             title: "Online service",
             subtitle: "Access to multiplayer games",
             monthPrice: "+$1/mo",
-            yearPrice: "+$10/yr"
+            yearPrice: "+$10/yr",
+            priceNumber: {
+                month: 1,
+                year: 10
+            }
         },
         { 
             id: 1, 
             chosen: false,
-            title: "Larget storage",
+            title: "Larger storage",
             subtitle: "Extra 1TB of cloud save",
             monthPrice: "+$2/mo",
-            yearPrice: "+$20/yr"
+            yearPrice: "+$20/yr",
+            priceNumber: {
+                month: 2,
+                year: 20
+            }
         },
         { 
             id: 2,
@@ -74,7 +82,11 @@ export default function Form() {
             title: "Customizable profile",
             subtitle: "Custom theme on your profile",
             monthPrice: "+$2/mo",
-            yearPrice: "+$20/yr"
+            yearPrice: "+$20/yr",
+            priceNumber: {
+                month: 2,
+                year: 20
+            }
         }
     ]);
 
@@ -82,7 +94,7 @@ export default function Form() {
     const currentStep = step == 0 ? (<FirstStep />)
             : step == 1 ? (<SecondStep />)
             : step == 2 ? (<ThirdStep />)
-            : (<ForthStep />)
+            : (<ForthStep />);
 
     return (
         <section className='main-section'>
