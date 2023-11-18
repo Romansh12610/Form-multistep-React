@@ -1,5 +1,5 @@
 import { useContext } from 'react';
-import { NextButton, PrevButton, InputContext, BillingContext, CardsContext, PanelsContext } from './Form';
+import { NextButton, PrevButton, InputContext, BillingContext, CardsContext, PanelsContext, MakeChangesSetterContext } from './Form';
 import { StepSetterContext } from './App';
 import './ForthStep.scss';
 
@@ -10,6 +10,7 @@ export default function ForthStep() {
     const billing = useContext(BillingContext);
     const cards = useContext(CardsContext);
     const panels = useContext(PanelsContext);
+    const setIsMakeChanges = useContext(MakeChangesSetterContext);
 
     // event handlers
     function handleNextClick(e) {
@@ -21,8 +22,10 @@ export default function ForthStep() {
         setStep(s => s - 1);
     }
 
-    function handleBackClick(step) {
+    function handleMakeChangesClick(step) {
         setStep(step);
+        setIsMakeChanges(true);
+        console.log('makingChanges from ' + step + ' step');
     }
 
     // to pass
@@ -40,7 +43,7 @@ export default function ForthStep() {
 
     return (
         <>
-            <div className='forth-step'>
+            <section className='forth-step'>
                 <h2 className='forth-step__h2'>Finishing up</h2>
                 <p className='forth-step__p'>Double-check everything looks <span className='forth-step__span-OK'>ok</span> before confirming</p>
                 <section className='forth-step__confirm-section'>
@@ -48,7 +51,7 @@ export default function ForthStep() {
                         title="Personal Data:"
                         list={formDataList}
                         name="personalData"
-                        handleClick={handleBackClick}
+                        handleClick={handleMakeChangesClick}
                         step={0}
                     />
                     <ConfirmBlock 
@@ -56,7 +59,7 @@ export default function ForthStep() {
                         list={planBillingList}
                         sumPrice={planBillingPrice}
                         name="planBilling"
-                        handleClick={handleBackClick}
+                        handleClick={handleMakeChangesClick}
                         step={1}
                     />
                     <ConfirmBlock 
@@ -64,11 +67,11 @@ export default function ForthStep() {
                         list={addOnsList}
                         sumPrice={addOnsPriceRender}
                         name="addOns"
-                        handleClick={handleBackClick}
+                        handleClick={handleMakeChangesClick}
                         step={2}
                     />
                 </section>
-            </div>
+            </section>
             <NextButton 
                 last={true}
                 handleClick={handleNextClick}
@@ -99,7 +102,7 @@ function ConfirmBlock({ title, list, sumPrice, handleClick, step }) {
                         e.preventDefault();
                         handleClick(step);
                     }}
-                >Make changes</a>
+                >Make some changes...</a>
             </div>
             {sumPrice && <p className='forth-step__price'>{sumPrice}</p>}
         </div>

@@ -1,19 +1,21 @@
-import { useState, useRef, useContext } from 'react';
+import { useRef, useContext } from 'react';
 import './SecondStep.scss';
 import { NextButton, PrevButton } from './Form';
 import { StepSetterContext } from './App';
-import { BillingContext, BillingSetterContext, CardsContext, CardsSetterContext } from './Form';
+import { BillingContext, BillingSetterContext, CardsContext, CardsSetterContext, MakeChangesSetterContext } from './Form';
 import arcadeIcon from './assets/images/icon-arcade.svg';
 import advancedIcon from './assets/images/icon-advanced.svg';
 import proIcon from './assets/images/icon-pro.svg';
 
-export default function SecondStep() {
+export default function SecondStep({ isMakingChanges}) {
     // contexts
     const setStep = useContext(StepSetterContext);
     const billing = useContext(BillingContext);
     const setBilling = useContext(BillingSetterContext);
     const cards = useContext(CardsContext);
     const setCards = useContext(CardsSetterContext);
+    const setIsMakeChanges = useContext(MakeChangesSetterContext);
+    const timerId = useRef(null);
 
     // button handlers
     function handleNextClick(e) {
@@ -42,6 +44,10 @@ export default function SecondStep() {
                 }
             }
         }));
+
+        if (isMakingChanges) {
+            
+        }
     }
 
     const cardsArray = cards.map(card => (

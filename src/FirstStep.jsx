@@ -1,13 +1,14 @@
 import { useRef, useContext, useEffect, forwardRef } from 'react';
 import './FirstStep.scss';
 import { Error } from './Error';
-import { InputContext, InputSetterContext, NextButton } from './Form';
+import { InputContext, InputSetterContext, NextButton, MakeChangesSetterContext} from './Form';
 import { StepContext, StepSetterContext } from './App';
 
-export default function FirstStep() {
+export default function FirstStep({ isMakingChanges }) {
     // contexts
     const formData = useContext(InputContext);
     const setFormData = useContext(InputSetterContext);
+    const setIsMakeChanges = useContext(MakeChangesSetterContext);
 
     // refs
     const nameRef = useRef(null);
@@ -16,6 +17,7 @@ export default function FirstStep() {
     const nameErrorRef = useRef(null);
     const emailErrorRef = useRef(null);
     const phoneErrorRef = useRef(null);
+    const timerId = useRef(null);
 
     // contexts
     const step = useContext(StepContext);
@@ -29,6 +31,42 @@ export default function FirstStep() {
     }, []);
 
     // event handlers
+    function showAcceptedChanges(targetNode, targetName) {
+        let message = "Changes accepted! Hope you do not lie to us...";
+
+        if (targetNode.validity.valid) {
+            switch (targetName) {
+                case "name": {
+                    nameErrorRef.current.style.color = 'green';
+                    nameErrorRef.current.textContent = message;
+                    setTimeout(() => {
+                        nameErrorRef.current.textContent = '';
+                        nameErrorRef.current.style.color = '';
+                    }, 3000);
+                    break;
+                }
+                case "email": {
+                    emailErrorRef.current.style.color = 'green';
+                    emailErrorRef.current.textContent = message;
+                    setTimeout(() => {
+                        emailErrorRef.current.textContent = '';
+                        emailErrorRef.current.style.color = '';
+                    }, 3000);
+                    break;
+                }
+                case "phone": {
+                    phoneErrorRef.current.style.color = 'green';
+                    phoneErrorRef.current.textContent = message;
+                    setTimeout(() => {
+                        phoneErrorRef.current.textContent = '';
+                        phoneErrorRef.current.style.color = '';
+                    }, 3000);
+                    break;
+                }
+            }
+        }
+    }
+
     function handleChange(e) {
         const { name, value } = e.target;
 
@@ -36,6 +74,15 @@ export default function FirstStep() {
             ...formData,
             [name]: value,
         });
+
+        if (isMakingChanges) {
+            if (timerId.current != null) {
+                clearTimeout(timerId.current);
+            }
+            timerId.current = setTimeout(() => {
+                showAcceptedChanges(e.target, name);
+            }, 2000);
+        }
     }
 
     function handleInput(e) {
@@ -97,6 +144,7 @@ export default function FirstStep() {
         }
 
         setStep((step + 1));
+        setIsMakeChanges(false);
     }
 
     return (

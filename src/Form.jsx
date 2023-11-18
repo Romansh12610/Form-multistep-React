@@ -14,9 +14,11 @@ export const CardsContext = createContext(null);
 export const CardsSetterContext = createContext(null);
 export const PanelsContext = createContext(null);
 export const PanelsSetterContext = createContext(null);
+export const MakeChangesSetterContext = createContext(null);
 
 export default function Form() {
     const step = useContext(StepContext);
+    const [isMakeChanges, setIsMakeChanges] = useState(false);
 
     const [formData, setFormData] = useState({
         name: '',
@@ -91,9 +93,9 @@ export default function Form() {
     ]);
 
 
-    const currentStep = step == 0 ? (<FirstStep />)
-            : step == 1 ? (<SecondStep />)
-            : step == 2 ? (<ThirdStep />)
+    const currentStep = step == 0 ? (<FirstStep isMakingChanges={isMakeChanges ? true : false}/>)
+            : step == 1 ? (<SecondStep  isMakingChanges={isMakeChanges ? true : false}/>)
+            : step == 2 ? (<ThirdStep  isMakingChanges={isMakeChanges ? true : false}/>)
             : (<ForthStep />);
 
     return (
@@ -108,7 +110,9 @@ export default function Form() {
                                         <CardsSetterContext.Provider value={setCards}>
                                             <PanelsContext.Provider value={panels}>
                                                 <PanelsSetterContext.Provider value={setPanels}>
-                                                    {currentStep}
+                                                    <MakeChangesSetterContext.Provider value={setIsMakeChanges}>
+                                                        {currentStep}
+                                                    </MakeChangesSetterContext.Provider>
                                                 </PanelsSetterContext.Provider>
                                             </PanelsContext.Provider>
                                         </CardsSetterContext.Provider>
