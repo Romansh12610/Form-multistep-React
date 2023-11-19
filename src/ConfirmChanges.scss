@@ -1,0 +1,78 @@
+@use './scss/globals/index';
+@use './scss/utils/index' as *;
+
+.confirm-popup {
+    position: fixed;
+    top: rem(0);
+    right: rem(100);
+    width: rem(180);
+    height: auto;
+    padding: rem(15);
+    background-color: var(--white);
+    border: rem(2) solid var(--pastel-blue);
+    border-radius: rem(20);
+    box-shadow: rem(0) rem(0) rem(5) rem(5) var(--pastel-blue);
+    transform: translate(rem(-100), rem(0));
+
+    transition: transform 100ms ease-in-out; // test
+
+    &.animated {
+        animation: fallFromTop 1.2s linear forwards ease-in-out;
+
+        @keyframes fallFromTop {
+            0% {
+                transform: translateY(0) rotate(0);
+            }
+
+            30% {
+                transform: translateY(rem(150)) rotate(100deg);
+            }
+
+            65% {
+                transform: translateY(rem(130)) rotate(220deg);
+            }
+
+            100% {
+                transform: translateY(rem(200)) rotate(360deg);
+            }
+        }
+    }
+
+    &__p {
+        color: var(--marine-blue);
+        font-family: var(--font-secondary);
+        margin-bottom: rem(15);
+    }
+
+    &__button {
+        width: rem(45);
+        height: rem(45);
+        transition: box-shadow 200ms ease-in-out;
+        cursor: pointer;
+        
+        &.animated {
+            animation: slideLtR 1.5s 1.5s ease-in-out alternate backwards infinite;
+
+            @keyframes slideLtR {
+                0% {
+                    transform: translateX(0);
+                }
+
+                100% {
+                    transform: translateX(rem(90));
+                }
+            }
+        }
+
+
+        &:hover {
+            animation: none;
+            box-shadow: rem(0) rem(0) rem(4) rem(2) var(--purplish-blue);
+        }
+    }
+
+    &__img {
+        width: rem(45);
+        height: auto;
+    }
+}

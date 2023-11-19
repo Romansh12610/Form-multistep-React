@@ -1,13 +1,14 @@
-import { useRef, useContext } from 'react';
+import { useState, useRef, useContext } from 'react';
 import './SecondStep.scss';
 import { NextButton, PrevButton } from './Form';
+import ConfirmChanges from './ConfirmChanges';
 import { StepSetterContext } from './App';
 import { BillingContext, BillingSetterContext, CardsContext, CardsSetterContext, MakeChangesSetterContext } from './Form';
 import arcadeIcon from './assets/images/icon-arcade.svg';
 import advancedIcon from './assets/images/icon-advanced.svg';
 import proIcon from './assets/images/icon-pro.svg';
 
-export default function SecondStep({ isMakingChanges}) {
+export default function SecondStep({ isMakingChanges }) {
     // contexts
     const setStep = useContext(StepSetterContext);
     const billing = useContext(BillingContext);
@@ -15,13 +16,17 @@ export default function SecondStep({ isMakingChanges}) {
     const cards = useContext(CardsContext);
     const setCards = useContext(CardsSetterContext);
     const setIsMakeChanges = useContext(MakeChangesSetterContext);
-    const timerId = useRef(null);
+
+    // states & refs for popup-window
+    const [isConfirm, setIsConfirm] = useState(false);
+    const confirmRef = useRef(null);
 
     // button handlers
     function handleNextClick(e) {
         e.preventDefault();
 
         setStep(prevStep => prevStep + 1);
+        setIsMakeChanges(false);
     }
 
     function handlePrevClick(e) {
@@ -46,7 +51,12 @@ export default function SecondStep({ isMakingChanges}) {
         }));
 
         if (isMakingChanges) {
-            
+            if (confirmRef.current) {
+                clearTimeout(confirmRef.current);
+            }
+            confirmRef.current = setTimeout(() => {
+                setIsConfirm(true);
+            }, 1500);
         }
     }
 
@@ -78,6 +88,10 @@ export default function SecondStep({ isMakingChanges}) {
                 setBilling={setBilling}
             />
         </div>
+        {isConfirm && <ConfirmChanges 
+            setIsConfirm={setIsConfirm}
+            isMakingChanges={isMakingChanges}
+        />}
         <NextButton handleClick={handleNextClick}/>
         <PrevButton handleClick={handlePrevClick}/>
         </>

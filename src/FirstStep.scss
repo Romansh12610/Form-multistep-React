@@ -39,6 +39,7 @@
         border: rem(2) solid var(--light-gray);
         border-radius: rem(8);
         width: 100%;
+        transition: border-color 200ms ease-in-out;
 
         &::placeholder {
             font-family: var(--font-secondary);

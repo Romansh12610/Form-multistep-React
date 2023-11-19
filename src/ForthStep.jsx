@@ -25,7 +25,6 @@ export default function ForthStep() {
     function handleMakeChangesClick(step) {
         setStep(step);
         setIsMakeChanges(true);
-        console.log('makingChanges from ' + step + ' step');
     }
 
     // to pass
