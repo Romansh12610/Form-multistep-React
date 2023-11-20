@@ -101,7 +101,7 @@ function ConfirmBlock({ title, list, sumPrice, handleClick, step }) {
                         e.preventDefault();
                         handleClick(step);
                     }}
-                >Make some changes...</a>
+                >Make some changes on step №{step + 1}</a>
             </div>
             {sumPrice && <p className='forth-step__price'>{sumPrice}</p>}
         </div>

@@ -63,9 +63,9 @@
 
     &__anchor {
         cursor: pointer;
-        color: #b65691;
+        color: var(--cool-gray);
         font-weight: bold;
-        transition: transform 200ms ease-in-out;
+        transition: transform 200ms ease-in-out, color 200ms ease-in-out;
 
         display: block;
         width: max-content;
@@ -74,6 +74,7 @@
         padding-block: 0.2em;
 
         &:hover, &:focus {
+            color: var(--purplish-blue);
             transform: scale(1.1) skew(-20deg);
         }
 
@@ -81,21 +82,23 @@
         &::after {
             content: '';
             position: absolute;
-            bottom: 0;
+            bottom: rem(-3);
             left: 0;
             width: 100%;
-            height: 0.2em;
+            height: rem(1.2);
             border-radius: rem(5);
-            background-color: var(--purplish-blue);
-            opacity: 0;
+            background-color: var(--strawberry-red);
+            opacity: 1;
+            transform: scale(0);
+            transform-origin: center;
             transition: opacity 200ms, transform 300ms ease-in-out,
                         box-shadow 200ms ease-in-out; 
         }
 
         &:hover::after, &:focus::after {
             opacity: 1;
-            transform: translateY(rem(5));
-            box-shadow: rem(0) rem(0) rem(4) rem(2) var(--pastel-blue);
+            transform: scale(1);
+            box-shadow: rem(0) rem(0) rem(5) rem(3) var(--purplish-blue);
         }
     }
 

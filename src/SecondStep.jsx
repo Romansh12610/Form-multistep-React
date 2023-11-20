@@ -17,10 +17,6 @@ export default function SecondStep({ isMakingChanges }) {
     const setCards = useContext(CardsSetterContext);
     const setIsMakeChanges = useContext(MakeChangesSetterContext);
 
-    // states & refs for popup-window
-    const [isConfirm, setIsConfirm] = useState(false);
-    const confirmRef = useRef(null);
-
     // button handlers
     function handleNextClick(e) {
         e.preventDefault();
@@ -51,12 +47,7 @@ export default function SecondStep({ isMakingChanges }) {
         }));
 
         if (isMakingChanges) {
-            if (confirmRef.current) {
-                clearTimeout(confirmRef.current);
-            }
-            confirmRef.current = setTimeout(() => {
-                setIsConfirm(true);
-            }, 1500);
+            setPopupClassName(prevName => prevName + ' open-animation');
         }
     }
 
@@ -75,6 +66,8 @@ export default function SecondStep({ isMakingChanges }) {
         />
     ))
 
+    const [popupClassName,setPopupClassName] = useState('confirm-popup');
+
     return (
         <>
         <div className='second-step'>
@@ -88,10 +81,7 @@ export default function SecondStep({ isMakingChanges }) {
                 setBilling={setBilling}
             />
         </div>
-        {isConfirm && <ConfirmChanges 
-            setIsConfirm={setIsConfirm}
-            isMakingChanges={isMakingChanges}
-        />}
+        {isMakingChanges && <ConfirmChanges className={popupClassName}/>}
         <NextButton handleClick={handleNextClick}/>
         <PrevButton handleClick={handlePrevClick}/>
         </>
