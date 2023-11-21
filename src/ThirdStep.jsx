@@ -1,15 +1,21 @@
 import './ThirdStep.scss';
 import { NextButton, PrevButton } from './Form';
-import { useContext } from 'react';
+import ConfirmChanges from './ConfirmChanges';
+import { useContext, useState } from 'react';
 import { StepSetterContext } from './App';
-import { BillingContext, PanelsContext, PanelsSetterContext } from './Form';
+import { BillingContext, PanelsContext, PanelsSetterContext, ButtonDisableContext, ButtonSetterContext, MakeChangesSetterContext } from './Form';
 
-export default function ThirdStep() {
+export default function ThirdStep({ isMakingChanges }) {
     // context
     const setStep = useContext(StepSetterContext);
     const billing = useContext(BillingContext);
     const panels = useContext(PanelsContext);
     const setPanels = useContext(PanelsSetterContext);
+    const buttonsDisable = useContext(ButtonDisableContext);
+    const setButtonsDisable = useContext(ButtonSetterContext);
+    const setIsMakeChanges = useContext(MakeChangesSetterContext);
+
+    const [showPopup, setShowPopup] = useState(false);
 
     // event handlers
     function handlePanelClick(panelId) {    
@@ -23,6 +29,10 @@ export default function ThirdStep() {
                 return panel;
             }
         }));
+
+        if (isMakingChanges) {
+            setShowPopup(true);
+        }
     }
 
     function handleNextClick(e) {
@@ -59,11 +69,18 @@ export default function ThirdStep() {
                     {panelsArray}
                 </div>
             </div>
+            {showPopup && <ConfirmChanges
+                setIsMakeChanges={setIsMakeChanges} 
+                setShowPopup={setShowPopup}
+                setButtonsDisable={setButtonsDisable}
+            />}
             <NextButton 
                 handleClick={handleNextClick}
+                isDisabled={buttonsDisable}
             />
             <PrevButton 
                 handleClick={handlePrevClick}
+                isDisabled={buttonsDisable}
             />
         </>
         

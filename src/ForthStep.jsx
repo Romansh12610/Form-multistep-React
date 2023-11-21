@@ -34,11 +34,14 @@ export default function ForthStep() {
     const billingTitle = billing[0].toUpperCase() + billing.slice(1);
     const planBillingList = [ plan, billingTitle ];
     const planBillingPrice = billing == 'monthly' ? monthPrice : yearPrice;
+    const planBillingPriceNumber = planBillingPrice.match(/\$(\d+)\//)[1];
     
     const chosenAddOns = panels.filter(p => p.chosen);
     const addOnsList = Array.from(chosenAddOns, addOn => addOn.title);
     const addOnsPriceNumber = billing == 'monthly' ? chosenAddOns.reduce((sum, current) => sum + current.priceNumber.month, 0) : chosenAddOns.reduce((sum, current) => sum + current.priceNumber.year, 0);
     const addOnsPriceRender = `+$${addOnsPriceNumber}/${billing == 'monthly' ? 'mo' : 'yr'}`;
+
+    const totalPrice = `+$${Number(addOnsPriceNumber) + Number(planBillingPriceNumber)}/${billing == 'monthly' ? 'mo' : 'yr'}`;
 
     return (
         <>
@@ -70,6 +73,10 @@ export default function ForthStep() {
                         step={2}
                     />
                 </section>
+                <div className='forth-step__total'>
+                    <h3 className='forth-step__title'>Total per {billing == 'monthly' ? 'month' : 'year'}:</h3>
+                    <p className='forth-step__total-price'>{totalPrice}</p>
+                </div>
             </section>
             <NextButton 
                 last={true}

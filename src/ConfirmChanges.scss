@@ -2,7 +2,9 @@
 @use './scss/utils/index' as *;
 
 .confirm-popup {
-    position: absolute;
+    position: fixed;
+    right: 5vw;
+    top: 0;
     cursor: pointer;
     width: rem(180);
     height: auto;
@@ -13,28 +15,36 @@
     border-radius: rem(20);
     box-shadow: rem(0) rem(0) rem(5) rem(5) var(--pastel-blue);
     transition: box-shadow 150ms ease-in-out;
+    transform: translateY(rem(-200));
     
-    &.open-animation {
-        z-index: 100;
-        animation: fallDown 1.3s 1s forwards ease-in-out;
+    &.animate {
+        animation: fallDown linear;
+        animation-duration: 2s;
+        animation-iteration-count: 1;
+        animation-fill-mode: forwards;
 
         @keyframes fallDown {
             0% {
-                transform: translateY(0) rotate(0);
+                transform: translateY(rem(-200)) rotate(0deg);
             }
 
-            70% {
-                transform: translateY(rem(700) rotate(180deg));
+            30% {
+                transform: translateY(rem(50)) rotate(70deg);
+            }
+            
+            60% {
+                transform: translateY(rem(120)) rotate(190deg);
             }
 
             100% {
-                transform: translateY(rem(500) rotate(360deg));
+                transform: translateY(rem(180)) rotate(360deg);
             }
         }
     }
 
     &:hover {
-        box-shadow: rem(0) rem(0) rem(8) rem(8) var(--pastel-blue);
+        background-color: var(--magnolia);
+        box-shadow: rem(0) rem(0) rem(8) rem(8) var(--purplish-blue);
     }
 
     &__p {
@@ -47,7 +57,7 @@
         width: rem(45);
         height: auto;
 
-        animation: slideLtR 1s 1.5s ease-in-out alternate infinite;
+        animation: slideLtR 1s 2.5s linear alternate infinite;
 
             @keyframes slideLtR {
                 0% {
@@ -62,6 +72,7 @@
 
     &__thanks {
         margin-top: rem(10);
-        color: rgb(26, 197, 26);
+        color: hsl(120, 100%, 36%);
+        font-size: rem(18);
     }
 }

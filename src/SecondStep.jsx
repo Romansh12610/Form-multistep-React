@@ -3,7 +3,7 @@ import './SecondStep.scss';
 import { NextButton, PrevButton } from './Form';
 import ConfirmChanges from './ConfirmChanges';
 import { StepSetterContext } from './App';
-import { BillingContext, BillingSetterContext, CardsContext, CardsSetterContext, MakeChangesSetterContext } from './Form';
+import { BillingContext, BillingSetterContext, CardsContext, CardsSetterContext, MakeChangesSetterContext, ButtonDisableContext, ButtonSetterContext } from './Form';
 import arcadeIcon from './assets/images/icon-arcade.svg';
 import advancedIcon from './assets/images/icon-advanced.svg';
 import proIcon from './assets/images/icon-pro.svg';
@@ -15,7 +15,12 @@ export default function SecondStep({ isMakingChanges }) {
     const setBilling = useContext(BillingSetterContext);
     const cards = useContext(CardsContext);
     const setCards = useContext(CardsSetterContext);
+    const buttonsDisable = useContext(ButtonDisableContext);
+    const setButtonsDisable = useContext(ButtonSetterContext);
+
+    //for popup
     const setIsMakeChanges = useContext(MakeChangesSetterContext);
+    const [showPopup, setShowPopup] = useState(false);
 
     // button handlers
     function handleNextClick(e) {
@@ -47,7 +52,7 @@ export default function SecondStep({ isMakingChanges }) {
         }));
 
         if (isMakingChanges) {
-            setPopupClassName(prevName => prevName + ' open-animation');
+            setShowPopup(true);
         }
     }
 
@@ -66,8 +71,6 @@ export default function SecondStep({ isMakingChanges }) {
         />
     ))
 
-    const [popupClassName,setPopupClassName] = useState('confirm-popup');
-
     return (
         <>
         <div className='second-step'>
@@ -79,11 +82,17 @@ export default function SecondStep({ isMakingChanges }) {
             <Toggler
                 billing={billing} 
                 setBilling={setBilling}
+                isMakingChanges={isMakingChanges}
+                setPopup={setShowPopup}
             />
         </div>
-        {isMakingChanges && <ConfirmChanges className={popupClassName}/>}
-        <NextButton handleClick={handleNextClick}/>
-        <PrevButton handleClick={handlePrevClick}/>
+        {showPopup && <ConfirmChanges 
+            setShowPopup={setShowPopup} 
+            setIsMakeChanges={setIsMakeChanges}
+            setButtonsDisable={setButtonsDisable}
+        />}
+        <NextButton handleClick={handleNextClick} isDisabled={buttonsDisable}/>
+        <PrevButton handleClick={handlePrevClick} isDisabled={buttonsDisable}/>
         </>
     )
 }
@@ -110,7 +119,7 @@ function Card({ title, price, srcImg, handleClick, cardId, chosen}) {
     )
 }
 
-const Toggler = ({ billing, setBilling }) => {
+const Toggler = ({ billing, setBilling, isMakingChanges, setPopup }) => {
     const buttonRef = useRef(null);
     
     let firstLabelClassName = billing == 'monthly' ? 'second-step__label chosen' : 'second-step__label';
@@ -131,6 +140,10 @@ const Toggler = ({ billing, setBilling }) => {
             setBilling('monthly');
             buttonRef.current.setAttribute('aria-pressed', 'false');
         }
+
+        if (isMakingChanges) {
+            setPopup(true);
+        }
     }
 
     const handleLabelClick = (e) => {
@@ -138,6 +151,10 @@ const Toggler = ({ billing, setBilling }) => {
         if (!target) return;
 
         setBilling(target.id);
+
+        if (isMakingChanges) {
+            setPopup(true);
+        }
     }
 
     return (

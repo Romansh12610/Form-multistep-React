@@ -15,11 +15,13 @@ export const CardsSetterContext = createContext(null);
 export const PanelsContext = createContext(null);
 export const PanelsSetterContext = createContext(null);
 export const MakeChangesSetterContext = createContext(null);
+export const ButtonDisableContext = createContext(null);
+export const ButtonSetterContext = createContext(null);
 
 export default function Form() {
     const step = useContext(StepContext);
     const [isMakeChanges, setIsMakeChanges] = useState(false);
-
+    const [buttonsDisable, setButtonsDisable] = useState(false);
     const [formData, setFormData] = useState({
         name: '',
         email: '',
@@ -33,7 +35,7 @@ export default function Form() {
             title: "Arcade",
             monthPrice: "+$9/mo",
             yearPrice: "+$90/yr",
-            chosen: false
+            chosen: true
         },
         {
             id: 1,
@@ -92,7 +94,6 @@ export default function Form() {
         }
     ]);
 
-
     const currentStep = step == 0 ? (<FirstStep isMakingChanges={isMakeChanges ? true : false}/>)
             : step == 1 ? (<SecondStep  isMakingChanges={isMakeChanges ? true : false}/>)
             : step == 2 ? (<ThirdStep  isMakingChanges={isMakeChanges ? true : false}/>)
@@ -104,21 +105,25 @@ export default function Form() {
                 <fieldset className='main-section__fieldset'>
                     <InputContext.Provider value={formData}>
                         <InputSetterContext.Provider value={setFormData}>
-                            <BillingContext.Provider value={billing}>
-                                <BillingSetterContext.Provider value={setBilling}>
-                                    <CardsContext.Provider value={cards}>
-                                        <CardsSetterContext.Provider value={setCards}>
-                                            <PanelsContext.Provider value={panels}>
-                                                <PanelsSetterContext.Provider value={setPanels}>
-                                                    <MakeChangesSetterContext.Provider value={setIsMakeChanges}>
-                                                        {currentStep}
-                                                    </MakeChangesSetterContext.Provider>
-                                                </PanelsSetterContext.Provider>
-                                            </PanelsContext.Provider>
-                                        </CardsSetterContext.Provider>
-                                    </CardsContext.Provider>
-                                </BillingSetterContext.Provider>
-                            </BillingContext.Provider>
+                            <ButtonDisableContext.Provider value={buttonsDisable}>
+                                <ButtonSetterContext.Provider value={setButtonsDisable}>
+                                    <BillingContext.Provider value={billing}>
+                                        <BillingSetterContext.Provider value={setBilling}>
+                                            <CardsContext.Provider value={cards}>
+                                                <CardsSetterContext.Provider value={setCards}>
+                                                    <PanelsContext.Provider value={panels}>
+                                                        <PanelsSetterContext.Provider value={setPanels}>
+                                                            <MakeChangesSetterContext.Provider value={setIsMakeChanges}>
+                                                                {currentStep}
+                                                            </MakeChangesSetterContext.Provider>
+                                                        </PanelsSetterContext.Provider>
+                                                    </PanelsContext.Provider>
+                                                </CardsSetterContext.Provider>
+                                            </CardsContext.Provider>
+                                        </BillingSetterContext.Provider>
+                                    </BillingContext.Provider>
+                                </ButtonSetterContext.Provider>
+                            </ButtonDisableContext.Provider>
                         </InputSetterContext.Provider>
                     </InputContext.Provider>
                 </fieldset> 
@@ -128,20 +133,34 @@ export default function Form() {
 }
 
 
-export function NextButton({ handleClick, last = null }) {
+export function NextButton({ handleClick, isDisabled, last = null }) {
+
+    let className = 'main-section__next';
+    if (isDisabled) {
+        className += ' disabled';
+    }
+
     return (
         <button 
-            className='main-section__next'
+            className={className}
             onClick={handleClick}
+            disabled={isDisabled}
         >{last ? "Confirm" : "Next Step"}</button>
     )
 }
 
-export function PrevButton ({ handleClick }) {
+export function PrevButton ({ handleClick, isDisabled }) {
+
+    let className = 'main-section__prev';
+    if (isDisabled) {
+        className += ' disabled';
+    }
+
     return (
         <button 
-            className='main-section__prev'
+            className={className}
             onClick={handleClick}
+            disabled={isDisabled}
         >Go Back</button>
     )
 }

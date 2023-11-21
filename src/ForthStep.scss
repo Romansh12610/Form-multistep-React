@@ -57,7 +57,7 @@
 
         & > li {
             margin-bottom: rem(5);
-            color: var(--purplish-blue);
+            color: var(--marine-blue);
         }
     }
 
@@ -106,6 +106,26 @@
         margin-left: auto;
         color: var(--purplish-blue);
         font-weight: bold;
+        font-size: rem(18);
         font-family: var(--font-secondary);
+    }
+
+
+    &__total {
+        margin-top: rem(10);
+        display: flex;
+        padding-inline: rem(40);
+        justify-content: space-between;
+    }
+
+    &__title {
+        
+    }
+
+    &__total-price {
+        font-size: rem(22);
+        font-weight: bold;
+        font-family: var(--font-secondary);
+        color: var(--strawberry-red);
     }
 }

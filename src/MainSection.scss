@@ -14,11 +14,12 @@
 
     &__fieldset {
         border: none;
+        height: 100%;
     }
 
     &__next {
         position: absolute;
-        bottom: rem(20);
+        bottom: rem(10);
         right: rem(-10);
         width: rem(130);
         height: rem(50);
@@ -34,11 +35,16 @@
         &:hover, &:focus {
             background-color: var(--purplish-blue);
         }
+
+        &.disabled {
+            background-color: gray;
+            cursor: not-allowed;
+        }
     }
 
     &__prev {
         position: absolute;
-        bottom: rem(20);
+        bottom: rem(10);
         left: 0;
         width: rem(130);
         height: rem(50);
@@ -51,6 +57,11 @@
 
         &:hover, &:focus {
             background-color: var(--pastel-blue);
+        }
+
+        &.disabled {
+            background-color: gray;
+            cursor: not-allowed;
         }
     }
 }
