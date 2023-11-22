@@ -1,14 +1,19 @@
-import { useRef, useContext, useEffect, forwardRef } from 'react';
+import { useRef, useContext, useEffect, forwardRef, useState } from 'react';
 import './FirstStep.scss';
 import { Error } from './Error';
-import { InputContext, InputSetterContext, NextButton, MakeChangesSetterContext} from './Form';
+import { InputContext, InputSetterContext, NextButton, MakeChangesSetterContext, ButtonDisableContext, ButtonSetterContext} from './Form';
 import { StepContext, StepSetterContext } from './App';
+import ConfirmChanges from './ConfirmChanges';
 
 export default function FirstStep({ isMakingChanges }) {
     // contexts
     const formData = useContext(InputContext);
     const setFormData = useContext(InputSetterContext);
     const setIsMakeChanges = useContext(MakeChangesSetterContext);
+    const step = useContext(StepContext);
+    const setStep = useContext(StepSetterContext);
+    const setButtonsDisabled = useContext(ButtonSetterContext);
+    const buttonsDisabled = useContext(ButtonDisableContext);
 
     // refs
     const nameRef = useRef(null);
@@ -19,10 +24,6 @@ export default function FirstStep({ isMakingChanges }) {
     const phoneErrorRef = useRef(null);
     const timerId = useRef(null);
 
-    // contexts
-    const step = useContext(StepContext);
-    const setStep = useContext(StepSetterContext);
-
     // effect 
     useEffect(() => {
         showError(nameRef.current, nameErrorRef.current);
@@ -30,9 +31,12 @@ export default function FirstStep({ isMakingChanges }) {
         showError(phoneRef.current, phoneErrorRef.current);
     }, []);
 
+    // for popup
+    const [showPopup, setShowPopup] = useState(false);
+
     // event handlers
     function showAcceptedChanges(targetNode, targetName) {
-        let message = "Changes accepted! Hope you do not lie to us...";
+        const message = "Changes accepted! Hope you do not lie to us...";
 
         if (targetNode.validity.valid) {
             switch (targetName) {
@@ -82,6 +86,8 @@ export default function FirstStep({ isMakingChanges }) {
             timerId.current = setTimeout(() => {
                 showAcceptedChanges(e.target, name);
             }, 2000);
+
+            setShowPopup(true);
         }
     }
 
@@ -202,12 +208,18 @@ export default function FirstStep({ isMakingChanges }) {
                 maxLength='15'
                 required='required'
             />
+            {showPopup && <ConfirmChanges 
+                setShowPopup={setShowPopup} 
+                setIsMakeChanges={setIsMakeChanges}
+                setButtonsDisable={setButtonsDisabled}
+            />}
             <Error
                 required={true} 
                 ref={phoneErrorRef}
             />
             <NextButton 
                 handleClick={handleFirstStep}
+                isDisabled={buttonsDisabled}
             />
         </div>
     )

@@ -1,9 +1,12 @@
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 import { NextButton, PrevButton, InputContext, BillingContext, CardsContext, PanelsContext, MakeChangesSetterContext } from './Form';
 import { StepSetterContext } from './App';
 import './ForthStep.scss';
+import thanksImg from './assets/images/icon-thank-you.svg';
 
 export default function ForthStep() {
+    const [isConfirmed, setIsConfirmed] = useState(false);
+
     //context
     const setStep = useContext(StepSetterContext);
     const formData = useContext(InputContext);
@@ -15,6 +18,7 @@ export default function ForthStep() {
     // event handlers
     function handleNextClick(e) {
         e.preventDefault();
+        setIsConfirmed(true);
     }
 
     function handlePrevClick(e) {
@@ -42,6 +46,17 @@ export default function ForthStep() {
     const addOnsPriceRender = `+$${addOnsPriceNumber}/${billing == 'monthly' ? 'mo' : 'yr'}`;
 
     const totalPrice = `+$${Number(addOnsPriceNumber) + Number(planBillingPriceNumber)}/${billing == 'monthly' ? 'mo' : 'yr'}`;
+
+    // rendering
+    if (isConfirmed) {
+        return (
+            <section className='forth-step'>
+                <img src={thanksImg} alt="" role='presentation' className='forth-step__thanks-img'/>
+                <h3 className='forth-step__thanks-title'>Thank You!</h3>
+                <p className='forth-step__thanks-subtitle'>Thanks for confirming your subscription! We hope you have some fun using our platform. If you ever need support please feel free to email us at support@loremgaming.com</p>
+            </section>
+        )
+    }
 
     return (
         <>
@@ -74,7 +89,7 @@ export default function ForthStep() {
                     />
                 </section>
                 <div className='forth-step__total'>
-                    <h3 className='forth-step__title'>Total per {billing == 'monthly' ? 'month' : 'year'}:</h3>
+                    <h3 className='forth-step__total-title'>Total per {billing == 'monthly' ? 'month' : 'year'}:</h3>
                     <p className='forth-step__total-price'>{totalPrice}</p>
                 </div>
             </section>

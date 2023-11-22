@@ -2,6 +2,12 @@
 @use './scss/utils/index' as *;
 
 .forth-step {
+    display: flex;
+    height: 100%;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
     &__h2 {
         font-size: rem(40);
         font-weight: 700;
@@ -110,16 +116,18 @@
         font-family: var(--font-secondary);
     }
 
-
     &__total {
         margin-top: rem(10);
         display: flex;
         padding-inline: rem(40);
         justify-content: space-between;
+        align-items: center;
     }
 
-    &__title {
-        
+    &__total-title {
+        color: var(--purplish-blue);
+        font-size: rem(24);
+        font-family: var(--font-secondary);
     }
 
     &__total-price {
@@ -127,5 +135,26 @@
         font-weight: bold;
         font-family: var(--font-secondary);
         color: var(--strawberry-red);
+    }
+
+    // thanks
+    &__thanks-img {
+        width: rem(80);
+        height: auto;
+    }
+
+    &__thanks-title {
+        margin-top: rem(20);
+        font-size: rem(30);
+        color: var(--purplish-blue);
+        font-family: var(--font-secondary);
+    }
+
+    &__thanks-subtitle {
+        text-align: center;
+        line-height: 1.5;
+        margin-top: rem(10);
+        color: var(--marine-blue);
+        margin-bottom: rem(80);
     }
 }

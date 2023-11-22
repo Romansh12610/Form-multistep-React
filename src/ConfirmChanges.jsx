@@ -9,6 +9,7 @@ export default function ConfirmChanges({ setShowPopup, setIsMakeChanges, setButt
     const [showThanks, setShowThanks] = useState(false);
     // ref
     const popupRef = useRef(null);
+    const timeoutRef = useRef(null);
 
     // effect
     useEffect(() => {
@@ -21,12 +22,14 @@ export default function ConfirmChanges({ setShowPopup, setIsMakeChanges, setButt
     function handleConfirmClick() {
         setShowThanks(true);
         setButtonsDisable(true); 
-        setTimeout(() => {
-            setStep(3);
-            setIsMakeChanges(false);
-            setButtonsDisable(false);
-            setShowPopup(false);
-        }, 2500);
+        if (!timeoutRef.current) {
+            timeoutRef.current = setTimeout(() => {
+                setStep(3);
+                setIsMakeChanges(false);
+                setButtonsDisable(false);
+                setShowPopup(false);
+            }, 2500);
+        }
     }
 
     return (

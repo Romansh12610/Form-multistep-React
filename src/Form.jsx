@@ -144,6 +144,7 @@ export function NextButton({ handleClick, isDisabled, last = null }) {
         <button 
             className={className}
             onClick={handleClick}
+            onMouseUp={(e) => e.target.blur()}
             disabled={isDisabled}
         >{last ? "Confirm" : "Next Step"}</button>
     )
@@ -160,6 +161,7 @@ export function PrevButton ({ handleClick, isDisabled }) {
         <button 
             className={className}
             onClick={handleClick}
+            onMouseUp={(e) => e.target.blur()}
             disabled={isDisabled}
         >Go Back</button>
     )
