@@ -50,7 +50,7 @@ export default function ForthStep() {
     // rendering
     if (isConfirmed) {
         return (
-            <section className='forth-step'>
+            <section className='forth-step thanks-stage'>
                 <img src={thanksImg} alt="" role='presentation' className='forth-step__thanks-img'/>
                 <h3 className='forth-step__thanks-title'>Thank You!</h3>
                 <p className='forth-step__thanks-subtitle'>Thanks for confirming your subscription! We hope you have some fun using our platform. If you ever need support please feel free to email us at support@loremgaming.com</p>

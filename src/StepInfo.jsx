@@ -2,16 +2,17 @@ import { useContext } from 'react';
 import { StepContext } from './App';
 import Step from "./Step";
 import './StepInfo.scss';
-import bgSidebar from './assets/images/bg-sidebar-desktop.svg';
+import sidebarDesktop from './assets/images/bg-sidebar-desktop.svg';
 
-export default function StepInfo() {
+
+export default function StepInfo({ sideBarImg }) {
     const step = useContext(StepContext);
 
     return (
         <section className="step-info">
             <img
                 className="step-info__bg" 
-                src={bgSidebar} 
+                src={sidebarDesktop} 
                 alt=""
                 role="presentation"
             />

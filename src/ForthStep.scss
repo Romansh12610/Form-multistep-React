@@ -5,8 +5,11 @@
     display: flex;
     height: 100%;
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
+    
+    &.thanks-stage {
+        justify-content: center;
+        align-items: center;
+    }
 
     &__h2 {
         font-size: rem(40);

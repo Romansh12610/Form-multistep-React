@@ -1,7 +1,7 @@
 import { useRef, useContext, useEffect, forwardRef, useState } from 'react';
 import './FirstStep.scss';
 import { Error } from './Error';
-import { InputContext, InputSetterContext, NextButton, MakeChangesSetterContext, ButtonDisableContext, ButtonSetterContext} from './Form';
+import { InputContext, InputSetterContext, NextButton, MakeChangesSetterContext, ButtonDisableContext, ButtonSetterContext } from './Form';
 import { StepContext, StepSetterContext } from './App';
 import ConfirmChanges from './ConfirmChanges';
 
@@ -239,7 +239,7 @@ const FormField = forwardRef(({ label, id, type, handleChange, handleInput, form
                 type={type}
                 id={id}
                 name={id}
-                value={formData[id]}
+                value={formData?.[id]}
                 onChange={handleChange}
                 onInput={handleInput}
                 placeholder={placeHolder}
