@@ -2,8 +2,7 @@ import './ThirdStep.scss';
 import { NextButton, PrevButton } from './Form';
 import ConfirmChanges from './ConfirmChanges';
 import { useContext, useState } from 'react';
-import { StepSetterContext } from './App';
-import { BillingContext, PanelsContext, PanelsSetterContext, ButtonDisableContext, ButtonSetterContext, MakeChangesSetterContext } from './Form';
+import { BillingContext, PanelsContext, PanelsSetterContext, ButtonDisableContext, ButtonSetterContext, MakeChangesSetterContext, StepSetterContext } from './Contexts';
 
 export default function ThirdStep({ isMakingChanges }) {
     // context

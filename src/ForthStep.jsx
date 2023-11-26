@@ -1,6 +1,6 @@
 import { useContext, useState } from 'react';
-import { NextButton, PrevButton, InputContext, BillingContext, CardsContext, PanelsContext, MakeChangesSetterContext } from './Form';
-import { StepSetterContext } from './App';
+import { NextButton, PrevButton } from './Form';
+import { InputContext, BillingContext, CardsContext, PanelsContext, MakeChangesSetterContext, StepSetterContext } from './Contexts';
 import './ForthStep.scss';
 import thanksImg from './assets/images/icon-thank-you.svg';
 

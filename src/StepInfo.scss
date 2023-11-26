@@ -2,24 +2,61 @@
 @use './scss/globals/index';
 
 .step-info {
-    display: flex;
-    flex-flow: column nowrap;
-    gap: rem(15);
-    margin: rem(15) 0 0 rem(15);
-    padding-left: 2vw;
-    padding-top: rem(50);
-    height: 100%;
-    width: 30%;
-    position: relative;
+
+    &__wrapper {
+        position: fixed;
+        top: rem(50);
+        left: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: rem(30);
+        width: 100%;
+
+        @include breakpoint-up(small) {
+            position: absolute;
+            top: rem(20);
+            left: rem(10);
+            flex-flow: column nowrap;
+            justify-content: flex-start;
+            align-items: flex-start;
+            padding-left: 2vw;
+            padding-top: rem(50);
+        }
+    }
+    
+    @include breakpoint-up(small) {
+        display: flex;
+        flex-flow: column nowrap;
+        justify-content: flex-start;
+        align-items: center;
+        gap: rem(15);
+        margin: rem(15) 0 0 rem(15);
+        padding-left: 2vw;
+        padding-top: rem(50);
+        height: 100%;
+        width: 30%;
+        position: relative;
+    }
 
     &__bg {
-        position: absolute;
-        height: rem(615);
-        width: rem(300);
+        display: block;
+        margin-block: auto;
+        position: fixed;
         top: 0;
         left: 0;
-        margin-block: auto;
-        display: block;
+        width: 100%;
+        height: auto;
+        z-index: -10;
+
+        @include breakpoint-up(small) {
+            position: absolute;
+            height: rem(615);
+            width: rem(300);
+            top: 0;
+            left: 0;
+            z-index: 0;
+        }
     }
 
     &__item {
@@ -50,9 +87,13 @@
     }
 
     &__titles {
-        display: flex;
-        flex-direction: column;
+        display: none;
 
+        @include breakpoint-up(small) {
+            display: flex;
+            flex-direction: column;
+        }
+        
         span {
             text-transform: uppercase;
         }

@@ -11,7 +11,19 @@ body {
 .main {
     display: flex;
     height: rem(730);
-    width: rem(900);
+    width: 90vw;
     background-color: var(--white);
     border-radius: rem(20);
+
+    @include breakpoint-up(small) {
+        width: calc(rem(650) + 5vw);
+    }
+
+    @include breakpoint-up(medium) {
+        width: calc(rem(850) + 3vw);
+    }
+
+    @include breakpoint-up(large) {
+        width: calc(rem(950) + 3vw);
+    }
 }

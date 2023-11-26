@@ -1,8 +1,8 @@
 import { useRef, useContext, useEffect, forwardRef, useState } from 'react';
 import './FirstStep.scss';
 import { Error } from './Error';
-import { InputContext, InputSetterContext, NextButton, MakeChangesSetterContext, ButtonDisableContext, ButtonSetterContext } from './Form';
-import { StepContext, StepSetterContext } from './App';
+import { InputContext, InputSetterContext, MakeChangesSetterContext, ButtonDisableContext, ButtonSetterContext, StepContext, StepSetterContext } from './Contexts';
+import { NextButton } from './Form';
 import ConfirmChanges from './ConfirmChanges';
 
 export default function FirstStep({ isMakingChanges }) {

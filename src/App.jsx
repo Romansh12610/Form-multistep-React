@@ -1,26 +1,7 @@
-import { useState, createContext, useEffect } from 'react';
-import Form from './Form';
-import StepInfo from './StepInfo';
-
-
-// contexts creation
-export const StepContext = createContext(0);
-export const StepSetterContext = createContext(null);
+import MainSection from './MainSection';
 
 export default function App() {
-  const [step, setStep] = useState(0);
-  
-
-  return (
-    <main className='main'>
-      <StepContext.Provider value={step}>
-        <StepSetterContext.Provider value={setStep}>
-          <StepInfo 
-				
-          />
-          <Form />
-        </StepSetterContext.Provider>
-      </StepContext.Provider>
-    </main>
-  )
+    return (
+        <MainSection />
+    )
 }

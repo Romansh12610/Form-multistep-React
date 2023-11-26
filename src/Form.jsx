@@ -1,22 +1,12 @@
-import { useState, useContext, createContext } from 'react';
-import { StepContext } from './App';
+import { useState, useContext } from 'react';
+import { StepContext } from './Contexts';
 import FirstStep from './FirstStep';
 import SecondStep from './SecondStep';
 import ThirdStep from './ThirdStep';
 import ForthStep from './ForthStep';
 import './MainSection.scss';
+import { InputContext, InputSetterContext, BillingContext, BillingSetterContext, CardsContext, CardsSetterContext, PanelsContext, PanelsSetterContext, MakeChangesSetterContext, ButtonDisableContext, ButtonSetterContext } from './Contexts';
 
-export const InputContext = createContext(null);
-export const InputSetterContext = createContext(null);
-export const BillingContext = createContext(null);
-export const BillingSetterContext = createContext(null);
-export const CardsContext = createContext(null);
-export const CardsSetterContext = createContext(null);
-export const PanelsContext = createContext(null);
-export const PanelsSetterContext = createContext(null);
-export const MakeChangesSetterContext = createContext(null);
-export const ButtonDisableContext = createContext(null);
-export const ButtonSetterContext = createContext(null);
 
 export default function Form() {
     const step = useContext(StepContext);

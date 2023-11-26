@@ -1,4 +1,4 @@
-import { StepSetterContext } from "./App";
+import { StepSetterContext } from "./Contexts";
 import arrowSvg from './assets/images/arrow-back.svg';
 import './ConfirmChanges.scss';
 import { useContext, useEffect, useRef, useState } from "react";
