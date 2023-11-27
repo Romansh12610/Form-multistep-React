@@ -23,24 +23,24 @@ export default function Form() {
             id: 0,
             status: "arcade",
             title: "Arcade",
-            monthPrice: "+$9/mo",
-            yearPrice: "+$90/yr",
+            monthPrice: "$9/mo",
+            yearPrice: "$90/yr",
             chosen: true
         },
         {
             id: 1,
             status: "advanced",
             title: "Advanced",
-            monthPrice: "+$12/mo",
-            yearPrice: "+$120/yr",
+            monthPrice: "$12/mo",
+            yearPrice: "$120/yr",
             chosen: false
         },
         {
             id: 2,
             status: "pro",
             title: "Pro",
-            monthPrice: "+$15/mo",
-            yearPrice: "+$150/yr",
+            monthPrice: "$15/mo",
+            yearPrice: "$150/yr",
             chosen: false
         }
     ]);

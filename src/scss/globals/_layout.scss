@@ -4,19 +4,26 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
+    min-height: 100vh;
     background-color: var(--magnolia);
 }
 
 .main {
     display: flex;
-    height: rem(730);
+    height: fit-content;
     width: 90vw;
     background-color: var(--white);
     border-radius: rem(20);
+    position: absolute;
+    top: rem(150);
+    left: 5vw;
+    margin-bottom: rem(500);
 
     @include breakpoint-up(small) {
         width: calc(rem(650) + 5vw);
+        position: static;
+        margin-top: rem(150);
+        height: rem(800);
     }
 
     @include breakpoint-up(medium) {

@@ -2,20 +2,27 @@
 @use './scss/utils/index' as *;
 
 .third-step {
+
     &__h2 {
         font-size: rem(42);
         font-weight: 700;
         letter-spacing: -0.5px;
         color: var(--marine-blue);
         margin: rem(10) 0 rem(20) 0;
-    }   
+    }
 
     &__p {
         color: var(--cool-gray);
-        font-size: rem(18);
+        font-size: rem(20);
         font-family: var(--font-secondary);
         margin-bottom: rem(25);
-        white-space: nowrap; // only desktop
+        line-height: 1.3;
+
+        @include breakpoint-up(small) {
+            white-space: nowrap;
+            font-size: rem(19);
+            line-height: 1;
+        }
     }
 
     &__option-section {
@@ -26,11 +33,17 @@
     }
 
     &__panel {
+
+        @include breakpoint-down(small) {
+            padding-block: rem(15);
+            height: min-content;
+        }
+
         display: flex;
         align-items: center;
         padding-inline: rem(15);
         padding-block: rem(10);
-        height: rem(100);
+        height: rem(110);
         border: rem(2) solid var(--light-gray);
         border-radius: rem(10);
         transition: border-color 300ms ease-in-out, background-color 150ms ease-in-out, box-shadow 150ms ease-in-out;
@@ -39,6 +52,7 @@
         &:hover, &:focus {
             border: rem(2) solid var(--pastel-blue);
             box-shadow: rem(0) rem(0) rem(4) rem(2) var(--pastel-blue);
+            background-color: var(--alabaster);
         }
 
         &.chosen {
@@ -54,6 +68,8 @@
         border-radius: rem(5);
         border: rem(1) solid var(--light-gray);
         margin-left: rem(8);
+        display: block;
+        flex-shrink: 0;
         
 
         &.chosen {
@@ -83,10 +99,18 @@
 
     &__price {
         margin-left: auto;
-        margin-right: rem(15);
-        color: hsl(283, 100%, 32%);
+        margin-right: rem(10);
+        color: var(--purplish-blue);
         font-family: var(--font-secondary);
         font-weight: 500;
-        font-size: rem(18);
+        font-size: rem(19);
+        padding-left: rem(7);
+
+        transition: color 150ms ease-in-out, transform 200ms ease-in-out;
+
+        &.chosen {
+            color: var(--strawberry-red);
+            transform: scale(1.2);
+        }
     }
 }

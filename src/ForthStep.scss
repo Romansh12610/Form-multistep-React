@@ -3,7 +3,7 @@
 
 .forth-step {
     display: flex;
-    height: 100%;
+    height: fit-content;
     flex-direction: column;
     
     &.thanks-stage {
@@ -12,19 +12,25 @@
     }
 
     &__h2 {
-        font-size: rem(40);
+        font-size: rem(42);
         font-weight: 700;
         letter-spacing: -0.5px;
         color: var(--marine-blue);
-        margin: rem(0) 0 rem(10) 0;
-    }   
+        margin: rem(10) 0 rem(20) 0;
+    }
 
     &__p {
         color: var(--cool-gray);
-        font-size: rem(18);
+        font-size: rem(20);
         font-family: var(--font-secondary);
-        margin-bottom: rem(10);
-        white-space: nowrap; // only desktop
+        margin-bottom: rem(25);
+        line-height: 1.3;
+
+        @include breakpoint-up(small) {
+            white-space: nowrap;
+            font-size: rem(19);
+            line-height: 1;
+        }
     }
 
     &__span-OK {
@@ -35,6 +41,8 @@
         background-color: var(--magnolia);
         border-radius: rem(15);
         padding: rem(5) rem(20);
+        height: fit-content;
+        margin-bottom: rem(15);
     }
 
     &__confirm-block {
@@ -56,8 +64,8 @@
 
     &__title {
         font-family: var(--font-secondary);
-        color: var(--marine-blue);
-        font-size: rem(22);
+        color: var(--purplish-blue);
+        font-size: rem(24);
     }
 
     &__selected-list {
@@ -65,6 +73,7 @@
         margin-left: rem(20);
 
         & > li {
+            font-size: rem(18);
             margin-bottom: rem(5);
             color: var(--marine-blue);
         }
@@ -73,6 +82,7 @@
     &__anchor {
         cursor: pointer;
         color: var(--cool-gray);
+        font-size: rem(18);
         font-weight: bold;
         transition: transform 200ms ease-in-out, color 200ms ease-in-out;
 
@@ -125,6 +135,7 @@
         padding-inline: rem(40);
         justify-content: space-between;
         align-items: center;
+        margin-bottom: rem(100);
     }
 
     &__total-title {

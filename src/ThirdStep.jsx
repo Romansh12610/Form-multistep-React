@@ -91,9 +91,11 @@ function Panel({ title, subTitle, price, panelId, handleClick, chosen }) {
 
     let panelClassName = 'third-step__panel';
     let checkMarkClassName = 'third-step__checkmark';
+    let priceClassName = 'third-step__price';
     if (chosen) {
         panelClassName += ' chosen';
         checkMarkClassName += ' chosen';
+        priceClassName += ' chosen';
     }
 
     return (
@@ -109,7 +111,7 @@ function Panel({ title, subTitle, price, panelId, handleClick, chosen }) {
                 <h4 className='third-step__title'>{title}</h4>
                 <p className='third-step__sub-title'>{subTitle}</p>
             </div>
-            <p className='third-step__price'>{price}</p>
+            <p className={priceClassName}>{price}</p>
         </div>
     )
 }

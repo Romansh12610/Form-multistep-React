@@ -112,8 +112,10 @@ function Card({ title, price, srcImg, handleClick, cardId, chosen}) {
             }}
         >
             <img src={srcImg} className='second-step__icon'/>
-            <h4 className='second-step__h4'>{title}</h4>
-            <p className='second-step__p'>{price}</p>
+            <div className='second-step__wrapper'>
+                <h4 className='second-step__h4'>{title}</h4>
+                <p className='second-step__p'>{price}</p>
+            </div>
         </div>
     )
 }
