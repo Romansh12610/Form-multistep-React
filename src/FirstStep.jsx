@@ -1,7 +1,7 @@
 import { useRef, useContext, useEffect, forwardRef, useState } from 'react';
 import './FirstStep.scss';
 import { Error } from './Error';
-import { InputContext, InputSetterContext, MakeChangesSetterContext, ButtonDisableContext, ButtonSetterContext, StepContext, StepSetterContext } from './Contexts';
+import { InputContext, InputSetterContext, MakeChangesSetterContext, ButtonDisableContext, ButtonSetterContext, StepContext, StepSetterContext, DesktopContext } from './Contexts';
 import { NextButton } from './Form';
 import ConfirmChanges from './ConfirmChanges';
 
@@ -14,6 +14,7 @@ export default function FirstStep({ isMakingChanges }) {
     const setStep = useContext(StepSetterContext);
     const setButtonsDisabled = useContext(ButtonSetterContext);
     const buttonsDisabled = useContext(ButtonDisableContext);
+    const isDesktop = useContext(DesktopContext);
 
     // refs
     const nameRef = useRef(null);
@@ -217,10 +218,10 @@ export default function FirstStep({ isMakingChanges }) {
                 required={true} 
                 ref={phoneErrorRef}
             />
-            <NextButton 
+            {isDesktop && <NextButton 
                 handleClick={handleFirstStep}
                 isDisabled={buttonsDisabled}
-            />
+            />}
         </div>
     )
 }

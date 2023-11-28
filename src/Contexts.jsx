@@ -2,6 +2,7 @@ import { createContext } from "react";
 
 export const StepContext = createContext(null);
 export const StepSetterContext = createContext(null);
+export const DesktopContext = createContext(null);
 
 export const InputContext = createContext(null);
 export const InputSetterContext = createContext(null);

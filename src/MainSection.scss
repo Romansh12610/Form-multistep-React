@@ -26,9 +26,13 @@
     }
 
     &__next {
-        position: absolute;
-        bottom: rem(10);
-        right: rem(-10);
+        position: relative;
+
+        @include breakpoint-up(small) {
+            position: absolute;
+            bottom: rem(10);
+            right: rem(-10);
+        }
         width: rem(130);
         height: rem(50);
         background-color: var(--marine-blue);
@@ -51,9 +55,13 @@
     }
 
     &__prev {
-        position: absolute;
-        bottom: rem(10);
-        left: 0;
+        position: relative;
+
+        @include breakpoint-up(small) {
+            position: absolute;
+            bottom: rem(10);
+            left: 0;
+        }
         width: rem(130);
         height: rem(50);
         font-family: var(--font-secondary);

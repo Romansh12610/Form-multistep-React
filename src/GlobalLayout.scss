@@ -1,4 +1,4 @@
-@use '../utils/index' as *;
+@use './scss/utils/index' as *;
 
 body {
     display: flex;
@@ -8,22 +8,31 @@ body {
     background-color: var(--magnolia);
 }
 
+#root {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    width: 100%;
+}
+
 .main {
     display: flex;
     height: fit-content;
     width: 90vw;
     background-color: var(--white);
     border-radius: rem(20);
-    position: absolute;
-    top: rem(150);
+    position: relative;
+    z-index: 100;
+    top: rem(100);
     left: 5vw;
-    margin-bottom: rem(500);
 
     @include breakpoint-up(small) {
         width: calc(rem(650) + 5vw);
         position: static;
         margin-top: rem(150);
-        height: rem(800);
+        height: rem(700);
+        z-index: 0;
+        overflow-y: visible;
     }
 
     @include breakpoint-up(medium) {
@@ -33,4 +42,16 @@ body {
     @include breakpoint-up(large) {
         width: calc(rem(950) + 3vw);
     }
+}
+
+.footer {
+    height: rem(80);
+    margin-top: rem(170);
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    margin-inline: 5vw;
+    background-color: var(--white);
+    border-radius: rem(15);
+    padding: rem(15) 0 0 0;
 }

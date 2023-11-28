@@ -2,9 +2,10 @@
 @use './scss/globals/index';
 
 .step-info {
+    position: relative;
 
     &__wrapper {
-        position: fixed;
+        position: relative;
         top: rem(50);
         left: 0;
         display: flex;
@@ -12,6 +13,7 @@
         align-items: center;
         gap: rem(30);
         width: 100%;
+        z-index: 15;
 
         @include breakpoint-up(small) {
             position: absolute;
@@ -47,7 +49,7 @@
         left: 0;
         width: 100%;
         height: auto;
-        z-index: -10;
+        z-index: 10;
 
         @include breakpoint-up(small) {
             position: absolute;
