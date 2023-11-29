@@ -2,14 +2,14 @@ import { useState, useRef, useContext } from 'react';
 import './SecondStep.scss';
 import { NextButton, PrevButton } from './Form';
 import ConfirmChanges from './ConfirmChanges';
-import { BillingContext, BillingSetterContext, CardsContext, CardsSetterContext, MakeChangesSetterContext, ButtonDisableContext, ButtonSetterContext, StepSetterContext } from './Contexts';
+import { BillingContext, BillingSetterContext, CardsContext, CardsSetterContext, MakeChangesSetterContext, ButtonDisableContext, ButtonSetterContext, DispatchStepContext } from './Contexts';
 import arcadeIcon from './assets/images/icon-arcade.svg';
 import advancedIcon from './assets/images/icon-advanced.svg';
 import proIcon from './assets/images/icon-pro.svg';
 
 export default function SecondStep({ isMakingChanges }) {
     // contexts
-    const setStep = useContext(StepSetterContext);
+    const dispatchStep = useContext(DispatchStepContext);
     const billing = useContext(BillingContext);
     const setBilling = useContext(BillingSetterContext);
     const cards = useContext(CardsContext);
@@ -25,14 +25,18 @@ export default function SecondStep({ isMakingChanges }) {
     function handleNextClick(e) {
         e.preventDefault();
 
-        setStep(prevStep => prevStep + 1);
+        dispatchStep({
+            type: "next",
+        });
         setIsMakeChanges(false);
     }
 
     function handlePrevClick(e) {
         e.preventDefault();
 
-        setStep(prevStep => prevStep - 1);
+        dispatchStep({
+            type: "prev",
+        });
     }
 
     function handleCardClick(cardId) {

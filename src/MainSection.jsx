@@ -1,12 +1,12 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import StepInfo from './StepInfo';
 import Form from './Form';
-import { StepContext, StepSetterContext, DesktopContext } from "./Contexts";
 import { NextButton, PrevButton } from "./Form";
 import './GlobalLayout.scss';
+import { DesktopContext, StepContext, InputContext, InputSetterContext } from "./Contexts";
+import StepReducer from './ReducerStep';
 
 export default function MainSection() {
-    const [step, setStep] = useState(0);
     const [isDesktop, setIsDesktop] = useState(
         window.matchMedia("(min-width: 651px)")
     );
@@ -24,10 +24,36 @@ export default function MainSection() {
         }
     }, []);
 
+
+    // contexts
+    const step = useContext(StepContext);
+    const formData = useContext(InputContext);
+    const setFormData = useContext(InputSetterContext);
+
+    function handleChange(e) {
+        const { name, value } = e.target;
+
+        setFormData({
+            ...formData,
+            [name]: value,
+        });
+
+        if (isMakingChanges) {
+            if (timerId.current != null) {
+                clearTimeout(timerId.current);
+            }
+            timerId.current = setTimeout(() => {
+                showAcceptedChanges(e.target, name);
+            }, 2000);
+
+            setShowPopup(true);
+        }
+    }
+
+    // rendering
     if (isDesktop === true) {
         return (
-            <StepContext.Provider value={step}>
-                <StepSetterContext.Provider value={setStep}>
+                <StepReducer>
                     <DesktopContext.Provider value={isDesktop}>
                         <main className="main">
                             <StepInfo 
@@ -38,13 +64,11 @@ export default function MainSection() {
                             />
                         </main>
                     </DesktopContext.Provider>
-                </StepSetterContext.Provider>
-            </StepContext.Provider>
-        )
+                </StepReducer>
+            )
     } else {
         return (
-            <StepContext.Provider value={step}>
-                <StepSetterContext.Provider value={setStep}>
+                <StepReducer>
                     <DesktopContext.Provider value={isDesktop}>
                         <StepInfo 
                             isDesktop={isDesktop}
@@ -53,12 +77,13 @@ export default function MainSection() {
                             <Form />
                         </main>
                         <footer className="footer">
-                            <NextButton />
+                            <NextButton 
+                                handleClick={handleChange}
+                            />
                             {step > 0 && <PrevButton />}
                         </footer>
                     </DesktopContext.Provider>
-                </StepSetterContext.Provider>
-            </StepContext.Provider>
-        )
+                </StepReducer>
+            )
     }
 }

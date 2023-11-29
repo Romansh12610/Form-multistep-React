@@ -1,6 +1,6 @@
 import { useContext, useState } from 'react';
 import { NextButton, PrevButton } from './Form';
-import { InputContext, BillingContext, CardsContext, PanelsContext, MakeChangesSetterContext, StepSetterContext } from './Contexts';
+import { InputContext, BillingContext, CardsContext, PanelsContext, MakeChangesSetterContext, DispatchStepContext } from './Contexts';
 import './ForthStep.scss';
 import thanksImg from './assets/images/icon-thank-you.svg';
 
@@ -8,7 +8,7 @@ export default function ForthStep() {
     const [isConfirmed, setIsConfirmed] = useState(false);
 
     //context
-    const setStep = useContext(StepSetterContext);
+    const dispatchStep = useContext(DispatchStepContext);
     const formData = useContext(InputContext);
     const billing = useContext(BillingContext);
     const cards = useContext(CardsContext);
@@ -23,11 +23,17 @@ export default function ForthStep() {
 
     function handlePrevClick(e) {
         e.preventDefault();
-        setStep(s => s - 1);
+        
+        dispatchStep({
+            type: "prev",
+        });
     }
 
     function handleMakeChangesClick(step) {
-        setStep(step);
+        dispatchStep({
+            changes: true,
+            number: step,
+        });
         setIsMakeChanges(true);
     }
 

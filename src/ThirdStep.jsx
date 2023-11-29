@@ -2,11 +2,11 @@ import './ThirdStep.scss';
 import { NextButton, PrevButton } from './Form';
 import ConfirmChanges from './ConfirmChanges';
 import { useContext, useState } from 'react';
-import { BillingContext, PanelsContext, PanelsSetterContext, ButtonDisableContext, ButtonSetterContext, MakeChangesSetterContext, StepSetterContext } from './Contexts';
+import { BillingContext, PanelsContext, PanelsSetterContext, ButtonDisableContext, ButtonSetterContext, MakeChangesSetterContext, DispatchStepContext } from './Contexts';
 
 export default function ThirdStep({ isMakingChanges }) {
     // context
-    const setStep = useContext(StepSetterContext);
+    const dispatchStep = useContext(DispatchStepContext);
     const billing = useContext(BillingContext);
     const panels = useContext(PanelsContext);
     const setPanels = useContext(PanelsSetterContext);
@@ -36,12 +36,18 @@ export default function ThirdStep({ isMakingChanges }) {
 
     function handleNextClick(e) {
         e.preventDefault();
-        setStep(prevStep => prevStep + 1);
+
+        dispatchStep({
+            type: "next",
+        })
     }
 
     function handlePrevClick(e) {
         e.preventDefault();
-        setStep(prevStep => prevStep - 1);
+
+        dispatchStep({
+            type: "prev",
+        });
     }
 
 
