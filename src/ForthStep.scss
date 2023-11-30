@@ -5,6 +5,7 @@
     display: flex;
     height: fit-content;
     flex-direction: column;
+    width: 100%;
     
     &.thanks-stage {
         justify-content: center;
@@ -87,7 +88,7 @@
         transition: transform 200ms ease-in-out, color 200ms ease-in-out;
 
         display: block;
-        width: max-content;
+        width: fit-content;
         position: relative;
         margin-left: rem(15);
         padding-block: 0.2em;
@@ -135,7 +136,10 @@
         padding-inline: rem(40);
         justify-content: space-between;
         align-items: center;
-        margin-bottom: rem(100);
+        
+        @include breakpoint-up(small) {
+            margin-bottom: rem(100);
+        }
     }
 
     &__total-title {

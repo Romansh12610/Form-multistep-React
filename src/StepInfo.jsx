@@ -1,13 +1,14 @@
 import { useContext } from 'react';
-import { StepContext } from './Contexts';
+import { StepContext, DesktopContext } from './Contexts';
 import Step from "./Step";
 import './StepInfo.scss';
 import sidebarDesktop from './assets/images/bg-sidebar-desktop.svg';
 import sidebarMobile from './assets/images/bg-sidebar-mobile.svg';
 
 
-export default function StepInfo({ isDesktop }) {
+export default function StepInfo() {
     const step = useContext(StepContext);
+    const isDesktop = useContext(DesktopContext);
 
     return (
         <section className="step-info">

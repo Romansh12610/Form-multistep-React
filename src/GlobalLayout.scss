@@ -23,7 +23,7 @@ body {
     border-radius: rem(20);
     position: relative;
     z-index: 100;
-    top: rem(100);
+    top: rem(80);
     left: 5vw;
 
     @include breakpoint-up(small) {
@@ -46,8 +46,9 @@ body {
 
 .footer {
     height: rem(80);
-    margin-top: rem(170);
+    margin-top: rem(130);
     display: flex;
+    gap: 10vw;
     justify-content: center;
     align-items: flex-start;
     margin-inline: 5vw;

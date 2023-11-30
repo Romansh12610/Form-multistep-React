@@ -1,6 +1,6 @@
 import { useContext, useState } from 'react';
 import { NextButton, PrevButton } from './Form';
-import { InputContext, BillingContext, CardsContext, PanelsContext, MakeChangesSetterContext, DispatchStepContext } from './Contexts';
+import { InputContext, BillingContext, CardsContext, PanelsContext, MakeChangesSetterContext, StepSetterContext, DesktopContext } from './Contexts';
 import './ForthStep.scss';
 import thanksImg from './assets/images/icon-thank-you.svg';
 
@@ -8,12 +8,13 @@ export default function ForthStep() {
     const [isConfirmed, setIsConfirmed] = useState(false);
 
     //context
-    const dispatchStep = useContext(DispatchStepContext);
+    const setStep = useContext(StepSetterContext);
     const formData = useContext(InputContext);
     const billing = useContext(BillingContext);
     const cards = useContext(CardsContext);
     const panels = useContext(PanelsContext);
     const setIsMakeChanges = useContext(MakeChangesSetterContext);
+    const isDesktop = useContext(DesktopContext);
 
     // event handlers
     function handleNextClick(e) {
@@ -24,16 +25,11 @@ export default function ForthStep() {
     function handlePrevClick(e) {
         e.preventDefault();
         
-        dispatchStep({
-            type: "prev",
-        });
+        setStep(prevStep => prevStep - 1);
     }
 
     function handleMakeChangesClick(step) {
-        dispatchStep({
-            changes: true,
-            number: step,
-        });
+        setStep(step);
         setIsMakeChanges(true);
     }
 
@@ -99,13 +95,13 @@ export default function ForthStep() {
                     <p className='forth-step__total-price'>{totalPrice}</p>
                 </div>
             </section>
-            <NextButton 
+            {isDesktop && <NextButton 
                 last={true}
                 handleClick={handleNextClick}
-            />
-            <PrevButton 
+            />}
+            {isDesktop && <PrevButton 
                 handleClick={handlePrevClick}
-            />
+            />}
         </>
     )
 }

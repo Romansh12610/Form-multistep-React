@@ -2,20 +2,21 @@ import { useState, useRef, useContext } from 'react';
 import './SecondStep.scss';
 import { NextButton, PrevButton } from './Form';
 import ConfirmChanges from './ConfirmChanges';
-import { BillingContext, BillingSetterContext, CardsContext, CardsSetterContext, MakeChangesSetterContext, ButtonDisableContext, ButtonSetterContext, DispatchStepContext } from './Contexts';
+import { BillingContext, BillingSetterContext, CardsContext, CardsSetterContext, MakeChangesSetterContext, ButtonDisableContext, ButtonSetterContext, StepSetterContext, DesktopContext } from './Contexts';
 import arcadeIcon from './assets/images/icon-arcade.svg';
 import advancedIcon from './assets/images/icon-advanced.svg';
 import proIcon from './assets/images/icon-pro.svg';
 
 export default function SecondStep({ isMakingChanges }) {
     // contexts
-    const dispatchStep = useContext(DispatchStepContext);
+    const setStep = useContext(StepSetterContext);
     const billing = useContext(BillingContext);
     const setBilling = useContext(BillingSetterContext);
     const cards = useContext(CardsContext);
     const setCards = useContext(CardsSetterContext);
     const buttonsDisable = useContext(ButtonDisableContext);
     const setButtonsDisable = useContext(ButtonSetterContext);
+    const isDesktop = useContext(DesktopContext);
 
     //for popup
     const setIsMakeChanges = useContext(MakeChangesSetterContext);
@@ -25,18 +26,14 @@ export default function SecondStep({ isMakingChanges }) {
     function handleNextClick(e) {
         e.preventDefault();
 
-        dispatchStep({
-            type: "next",
-        });
+        setStep(prevStep => prevStep + 1);
         setIsMakeChanges(false);
     }
 
     function handlePrevClick(e) {
         e.preventDefault();
 
-        dispatchStep({
-            type: "prev",
-        });
+       setStep(prevStep => prevStep - 1);
     }
 
     function handleCardClick(cardId) {
@@ -94,8 +91,8 @@ export default function SecondStep({ isMakingChanges }) {
             setIsMakeChanges={setIsMakeChanges}
             setButtonsDisable={setButtonsDisable}
         />}
-        <NextButton handleClick={handleNextClick} isDisabled={buttonsDisable}/>
-        <PrevButton handleClick={handlePrevClick} isDisabled={buttonsDisable}/>
+        {isDesktop && <NextButton handleClick={handleNextClick} isDisabled={buttonsDisable}/>}
+        {isDesktop && <PrevButton handleClick={handlePrevClick} isDisabled={buttonsDisable}/>}
         </>
     )
 }

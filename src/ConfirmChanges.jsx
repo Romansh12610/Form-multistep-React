@@ -1,11 +1,11 @@
-import { DispatchStepContext } from "./Contexts";
+import { StepSetterContext } from "./Contexts";
 import arrowSvg from './assets/images/arrow-back.svg';
 import './ConfirmChanges.scss';
 import { useContext, useEffect, useRef, useState } from "react";
 
 export default function ConfirmChanges({ setShowPopup, setIsMakeChanges, setButtonsDisable }) {
     // context & state
-    const dispatchStep = useContext(DispatchStepContext);
+    const setStep = useContext(StepSetterContext);
     const [showThanks, setShowThanks] = useState(false);
     // ref
     const popupRef = useRef(null);
@@ -24,10 +24,7 @@ export default function ConfirmChanges({ setShowPopup, setIsMakeChanges, setButt
         setButtonsDisable(true); 
         if (!timeoutRef.current) {
             timeoutRef.current = setTimeout(() => {
-                dispatchStep({
-                    changes: true,
-                    number: 3,
-                });
+                setStep(3);
                 setIsMakeChanges(false);
                 setButtonsDisable(false);
                 setShowPopup(false);

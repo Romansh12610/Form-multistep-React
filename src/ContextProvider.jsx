@@ -1,8 +1,8 @@
-import { useState, useReducer } from "react";
-import { InputContext, InputSetterContext, BillingContext, BillingSetterContext, CardsContext, CardsSetterContext, PanelsContext, PanelsSetterContext, MakeChangesContext, MakeChangesSetterContext, ButtonDisableContext, ButtonSetterContext, StepContext, DispatchStepContext } from './Contexts';
+import { useState } from "react";
+import { InputContext, InputSetterContext, BillingContext, BillingSetterContext, CardsContext, CardsSetterContext, PanelsContext, PanelsSetterContext, MakeChangesContext, MakeChangesSetterContext, ButtonDisableContext, ButtonSetterContext, StepContext, StepSetterContext } from './Contexts';
 
-export default function StepReducer({ children }) {
-    const [step, dispatch] = useReducer(ReduceSteps, 0);
+export default function ContextProvider({ children }) {
+    const [step, setStep] = useState(0);
     const [isMakeChanges, setIsMakeChanges] = useState(false);
     const [buttonsDisable, setButtonsDisable] = useState(false);
     const [formData, setFormData] = useState({
@@ -79,7 +79,7 @@ export default function StepReducer({ children }) {
 
     return (
         <StepContext.Provider value={step}>
-            <DispatchStepContext.Provider value={dispatch}>
+            <StepSetterContext.Provider value={setStep}>
                 <InputContext.Provider value={formData}>
                     <InputSetterContext.Provider value={setFormData}>
                         <ButtonDisableContext.Provider value={buttonsDisable}>
@@ -105,23 +105,7 @@ export default function StepReducer({ children }) {
                         </ButtonDisableContext.Provider>
                     </InputSetterContext.Provider>
                 </InputContext.Provider>
-            </DispatchStepContext.Provider>
+            </StepSetterContext.Provider>
         </StepContext.Provider>
     )
-}
-
-function ReduceSteps(step, action) {
-    if (action.changes === true) {
-        return action.number;
-    }
-
-    switch(action.type) {
-        case "next": {
-            return step < 3 ? step + 1 : step;
-        }
-
-        case "prev": {
-            return step > 0 ? step - 1 : step;
-        }
-    }
 }

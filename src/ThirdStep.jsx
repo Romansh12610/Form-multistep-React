@@ -2,17 +2,18 @@ import './ThirdStep.scss';
 import { NextButton, PrevButton } from './Form';
 import ConfirmChanges from './ConfirmChanges';
 import { useContext, useState } from 'react';
-import { BillingContext, PanelsContext, PanelsSetterContext, ButtonDisableContext, ButtonSetterContext, MakeChangesSetterContext, DispatchStepContext } from './Contexts';
+import { BillingContext, PanelsContext, PanelsSetterContext, ButtonDisableContext, ButtonSetterContext, MakeChangesSetterContext, StepSetterContext, DesktopContext } from './Contexts';
 
 export default function ThirdStep({ isMakingChanges }) {
     // context
-    const dispatchStep = useContext(DispatchStepContext);
+    const setStep = useContext(StepSetterContext);
     const billing = useContext(BillingContext);
     const panels = useContext(PanelsContext);
     const setPanels = useContext(PanelsSetterContext);
     const buttonsDisable = useContext(ButtonDisableContext);
     const setButtonsDisable = useContext(ButtonSetterContext);
     const setIsMakeChanges = useContext(MakeChangesSetterContext);
+    const isDesktop = useContext(DesktopContext);
 
     const [showPopup, setShowPopup] = useState(false);
 
@@ -37,17 +38,14 @@ export default function ThirdStep({ isMakingChanges }) {
     function handleNextClick(e) {
         e.preventDefault();
 
-        dispatchStep({
-            type: "next",
-        })
+        setStep(prevStep => prevStep + 1);
+        setIsMakeChanges(false);
     }
 
     function handlePrevClick(e) {
         e.preventDefault();
 
-        dispatchStep({
-            type: "prev",
-        });
+        setStep(prevStep => prevStep - 1);
     }
 
 
@@ -79,14 +77,14 @@ export default function ThirdStep({ isMakingChanges }) {
                 setShowPopup={setShowPopup}
                 setButtonsDisable={setButtonsDisable}
             />}
-            <NextButton 
+            {isDesktop && <NextButton 
                 handleClick={handleNextClick}
                 isDisabled={buttonsDisable}
-            />
-            <PrevButton 
+            />}
+            {isDesktop && <PrevButton 
                 handleClick={handlePrevClick}
                 isDisabled={buttonsDisable}
-            />
+            />}
         </>
         
     )
