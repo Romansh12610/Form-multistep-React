@@ -17,6 +17,7 @@ body {
 
 .main {
     display: flex;
+    justify-content: flex-start;
     height: fit-content;
     width: 90vw;
     background-color: var(--white);
@@ -27,12 +28,13 @@ body {
     left: 5vw;
 
     @include breakpoint-up(small) {
-        width: calc(rem(650) + 5vw);
+        width: 95vw;
         position: static;
         margin-top: rem(150);
         height: rem(700);
         z-index: 0;
         overflow-y: visible;
+        margin-inline: auto;
     }
 
     @include breakpoint-up(medium) {
@@ -40,7 +42,7 @@ body {
     }
 
     @include breakpoint-up(large) {
-        width: calc(rem(950) + 3vw);
+        width: rem(950);
     }
 }
 

@@ -15,3 +15,5 @@ export const MakeChangesContext = createContext(null);
 export const MakeChangesSetterContext = createContext(null);
 export const ButtonDisableContext = createContext(null);
 export const ButtonSetterContext = createContext(null);
+export const ConfirmedContext = createContext(null);
+export const ConfirmedSetterContext = createContext(null);

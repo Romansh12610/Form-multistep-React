@@ -14,7 +14,7 @@ export default function Form({ children }) {
 }
 
 
-export function NextButton({ handleClick, isDisabled, last = null }) {
+export function NextButton({ handleClick, isDisabled, last = false }) {
 
     let className = 'main-section__next';
     if (isDisabled) {

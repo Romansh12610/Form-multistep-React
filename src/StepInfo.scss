@@ -53,8 +53,11 @@
 
         @include breakpoint-up(small) {
             position: absolute;
-            height: rem(615);
-            width: rem(300);
+            height: auto;
+            max-height: rem(650);
+            min-width: rem(240);
+            width: calc(37vw);
+            max-width: rem(280);
             top: 0;
             left: 0;
             z-index: 0;

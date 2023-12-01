@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { InputContext, InputSetterContext, BillingContext, BillingSetterContext, CardsContext, CardsSetterContext, PanelsContext, PanelsSetterContext, MakeChangesContext, MakeChangesSetterContext, ButtonDisableContext, ButtonSetterContext, StepContext, StepSetterContext } from './Contexts';
+import { InputContext, InputSetterContext, BillingContext, BillingSetterContext, CardsContext, CardsSetterContext, PanelsContext, PanelsSetterContext, MakeChangesContext, MakeChangesSetterContext, ButtonDisableContext, ButtonSetterContext, StepContext, StepSetterContext, ConfirmedContext, ConfirmedSetterContext } from './Contexts';
 
 export default function ContextProvider({ children }) {
     const [step, setStep] = useState(0);
@@ -77,6 +77,8 @@ export default function ContextProvider({ children }) {
         }
     ]);
 
+    const [isConfirmed, setIsConfirmed] = useState(false);
+
     return (
         <StepContext.Provider value={step}>
             <StepSetterContext.Provider value={setStep}>
@@ -92,7 +94,11 @@ export default function ContextProvider({ children }) {
                                                     <PanelsSetterContext.Provider value={setPanels}>
                                                         <MakeChangesContext.Provider value={isMakeChanges}>
                                                             <MakeChangesSetterContext.Provider value={setIsMakeChanges}>
-                                                                {children}
+                                                                <ConfirmedContext.Provider value={isConfirmed}>
+                                                                    <ConfirmedSetterContext.Provider value={setIsConfirmed}>
+                                                                        {children}
+                                                                    </ConfirmedSetterContext.Provider>
+                                                                </ConfirmedContext.Provider>
                                                             </MakeChangesSetterContext.Provider>
                                                         </MakeChangesContext.Provider>
                                                     </PanelsSetterContext.Provider>

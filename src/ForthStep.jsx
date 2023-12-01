@@ -1,11 +1,10 @@
-import { useContext, useState } from 'react';
+import { useContext } from 'react';
 import { NextButton, PrevButton } from './Form';
-import { InputContext, BillingContext, CardsContext, PanelsContext, MakeChangesSetterContext, StepSetterContext, DesktopContext } from './Contexts';
+import { InputContext, BillingContext, CardsContext, PanelsContext, MakeChangesSetterContext, StepSetterContext, DesktopContext, ConfirmedContext, ConfirmedSetterContext } from './Contexts';
 import './ForthStep.scss';
 import thanksImg from './assets/images/icon-thank-you.svg';
 
 export default function ForthStep() {
-    const [isConfirmed, setIsConfirmed] = useState(false);
 
     //context
     const setStep = useContext(StepSetterContext);
@@ -15,6 +14,8 @@ export default function ForthStep() {
     const panels = useContext(PanelsContext);
     const setIsMakeChanges = useContext(MakeChangesSetterContext);
     const isDesktop = useContext(DesktopContext);
+    const isConfirmed = useContext(ConfirmedContext);
+    const setIsConfirmed = useContext(ConfirmedSetterContext);
 
     // event handlers
     function handleNextClick(e) {
