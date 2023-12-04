@@ -1,13 +1,13 @@
 @use 'functions' as *;
 
 $breakpoints-up: (
-    'small': em(650),
+    'small': em(700),
     'medium': em(900),
     'large': em(1200),
 );
 
 $breakpoints-down: (
-    'small': em(649),
+    'small': em(699),
     'medium': em(899),
     'large': em(1200),
 );

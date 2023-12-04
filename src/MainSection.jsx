@@ -12,16 +12,15 @@ import { DesktopContext, StepContext, MakeChangesContext, MakeChangesSetterConte
 export default function MainSection() {
 
     // orientation manipulations
-    const [isDesktop, setIsDesktop] = useState(
-        window.matchMedia("(min-width: 651px)")
-    );
+    const shouldDesktop = window.innerWidth > 700;
+    const [isDesktop, setIsDesktop] = useState(shouldDesktop);
 
     useEffect(() => {
         function handleChangeOrientation(e) {
             setIsDesktop(e.matches);
         }
 
-        window.matchMedia("(min-width: 651px)")
+        window.matchMedia("(min-width: 700px)")
             .addEventListener('change', handleChangeOrientation);
 
         return () => {
@@ -41,8 +40,6 @@ export default function MainSection() {
             : step == 1 ? (<SecondStep  isMakingChanges={isMakeChanges ? true : false}/>)
             : step == 2 ? (<ThirdStep  isMakingChanges={isMakeChanges ? true : false}/>)
             : (<ForthStep />);
-
-    console.log(step);
     
     // button handlers
     function handleFirstStep(e) {
@@ -83,11 +80,17 @@ export default function MainSection() {
         : handleLastStep;
 
 
+    let mainClassName = 'main';
+    if (step === 3) {
+        mainClassName += ' extended';
+    }
+
     // rendering
     if (isDesktop === true) {
+        //desktop orientation
         return (
                 <DesktopContext.Provider value={isDesktop}>
-                    <main className="main">
+                    <main className={mainClassName}>
                         <StepInfo />
                         <Form>
                             {currentStep}
@@ -96,6 +99,7 @@ export default function MainSection() {
                 </DesktopContext.Provider>
             )
     } else {
+        //mobile orientation
         return (
                 <DesktopContext.Provider value={isDesktop}>
                     <StepInfo />

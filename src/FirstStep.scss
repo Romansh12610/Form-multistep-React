@@ -9,7 +9,7 @@
 
     @include breakpoint-up(small) {
         min-width: rem(300);
-        width: calc(rem(260)  + 9vw);
+        width: calc(rem(200)  + 20vw);
     }
 
     @include breakpoint-up(medium) {

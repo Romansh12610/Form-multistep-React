@@ -1,10 +1,10 @@
 @use './scss/utils/index' as *;
 
 .main-section {
-    padding-inline: rem(30);
+    padding-inline: 3vw;
     padding-block: rem(20);
     width: 100%;
-    height: fit-content;
+    height: 100%;
     flex-grow: 1;
 
     @include breakpoint-up(small) {
@@ -44,15 +44,24 @@
         @include breakpoint-up(small) {
             position: absolute;
             bottom: rem(10);
-            right: rem(+10);
+            right: rem(10);
+
+            &.extended {
+                bottom: rem(-190);
+                right: 0;
+            }
         }
 
         @include breakpoint-up(medium) {
             right: rem(0);
+
+            &.extended {
+                bottom: rem(-90);
+            }
         }
 
         @include breakpoint-up(large) {
-            right: rem(+55);
+            right: rem(55);
         }
 
         width: rem(130);
@@ -64,7 +73,7 @@
         font-weight: 500;
         border-radius: rem(10);
         cursor: pointer;
-        transition: background-color 150ms ease-in-out;
+        transition: all 150ms ease-in-out;
 
         &:hover, &:focus {
             background-color: var(--purplish-blue);
@@ -83,7 +92,19 @@
             position: absolute;
             bottom: rem(10);
             left: 0;
+
+            &.extended {
+                bottom: rem(-190);
+                left: rem(-70);
+            }
         }
+
+        @include breakpoint-up(medium) {
+            &.extended {
+                bottom: rem(-90)
+            }
+        }
+
         width: rem(130);
         height: rem(50);
         font-family: var(--font-secondary);

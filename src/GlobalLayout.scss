@@ -30,15 +30,23 @@ body {
     @include breakpoint-up(small) {
         width: 95vw;
         position: static;
-        margin-top: rem(150);
-        height: rem(700);
+        margin-top: rem(80);
         z-index: 0;
-        overflow-y: visible;
         margin-inline: auto;
+        
+        &.extended {
+            padding-bottom: rem(195);
+            margin-bottom: rem(200);
+        }
     }
 
     @include breakpoint-up(medium) {
-        width: calc(rem(850) + 3vw);
+        width: calc(rem(850) + 3vw);padding-bottom: 0;
+
+        &.extended {
+            padding-bottom: rem(90);
+            margin-bottom: rem(100);
+        }
     }
 
     @include breakpoint-up(large) {

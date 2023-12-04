@@ -99,9 +99,11 @@ export default function ForthStep() {
             {isDesktop && <NextButton 
                 last={true}
                 handleClick={handleNextClick}
+                extended={true}
             />}
             {isDesktop && <PrevButton 
                 handleClick={handlePrevClick}
+                extended={true}
             />}
         </>
     )

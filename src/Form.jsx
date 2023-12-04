@@ -14,11 +14,16 @@ export default function Form({ children }) {
 }
 
 
-export function NextButton({ handleClick, isDisabled, last = false }) {
+export function NextButton({ handleClick, isDisabled, last = false, extended = false }) {
 
     let className = 'main-section__next';
+
     if (isDisabled) {
         className += ' disabled';
+    }
+
+    if (extended) {
+        className += ' extended';
     }
 
     return (
@@ -31,11 +36,16 @@ export function NextButton({ handleClick, isDisabled, last = false }) {
     )
 }
 
-export function PrevButton ({ handleClick, isDisabled }) {
+export function PrevButton ({ handleClick, isDisabled, extended = false }) {
 
     let className = 'main-section__prev';
+
     if (isDisabled) {
         className += ' disabled';
+    }
+    
+    if (extended) {
+        className += ' extended';
     }
 
     return (
