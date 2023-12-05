@@ -201,15 +201,14 @@
         left: rem(3);
         border-radius: 50%;
         border: rem(2) solid var(--marine-blue);
-        box-shadow: rem(0) rem(0) rem(3) rem(1) var(--marine-blue);
-        transition: transform 200ms ease-in-out, background-color 200ms ease-in-out,
-                    box-shadow 200ms ease-in-out;
+        box-shadow: rem(0) rem(0) rem(2) rem(1) var(--marine-blue);
+        transition: transform 200ms ease-in-out, background-color 200ms ease-in-out;
 
         &.pressed {
             transform: translateX(rem(23));
             background-color: var(--purplish-blue);
             border: rem(2) solid var(--strawberry-red);
-            box-shadow: rem(0) rem(0) rem(5) rem(3) var(--purplish-blue);            
+            box-shadow: rem(0) rem(0) rem(3) rem(3) var(--purplish-blue);            
         }
     }
 }

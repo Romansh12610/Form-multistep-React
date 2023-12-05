@@ -47,7 +47,7 @@
             right: rem(10);
 
             &.extended {
-                bottom: rem(-190);
+                bottom: rem(-220);
                 right: 0;
             }
         }
@@ -56,7 +56,8 @@
             right: rem(0);
 
             &.extended {
-                bottom: rem(-90);
+                bottom: rem(-150);
+                right: rem(0);
             }
         }
 
@@ -94,14 +95,15 @@
             left: 0;
 
             &.extended {
-                bottom: rem(-190);
+                bottom: rem(-220);
                 left: rem(-70);
             }
         }
 
         @include breakpoint-up(medium) {
             &.extended {
-                bottom: rem(-90)
+                bottom: rem(-150);
+                left: rem(-150);
             }
         }
 

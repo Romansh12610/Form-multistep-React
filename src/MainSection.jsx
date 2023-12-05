@@ -7,7 +7,7 @@ import ThirdStep from './ThirdStep';
 import ForthStep from './ForthStep';
 import { NextButton, PrevButton } from "./Form";
 import './GlobalLayout.scss';
-import { DesktopContext, StepContext, MakeChangesContext, MakeChangesSetterContext, StepSetterContext, ConfirmedContext, ConfirmedSetterContext } from "./Contexts";
+import { DesktopContext, StepContext, MakeChangesContext, MakeChangesSetterContext, StepSetterContext, ConfirmedContext, ConfirmedSetterContext, ButtonDisableContext } from "./Contexts";
 
 export default function MainSection() {
 
@@ -35,6 +35,7 @@ export default function MainSection() {
     const setIsMakeChanges = useContext(MakeChangesSetterContext);
     const isConfirmed = useContext(ConfirmedContext);
     const setIsConfirmed = useContext(ConfirmedSetterContext);
+    const buttonsDisabled = useContext(ButtonDisableContext);
 
     const currentStep = step === 0 ? (<FirstStep isMakingChanges={isMakeChanges ? true : false}/>)
             : step == 1 ? (<SecondStep  isMakingChanges={isMakeChanges ? true : false}/>)
@@ -111,9 +112,11 @@ export default function MainSection() {
                     {!isConfirmed && (<footer className="footer">
                             {step > 0 && <PrevButton 
                                 handleClick={handlePrevClick}
+                                isDisabled={buttonsDisabled}
                             />}
                             <NextButton 
                                 handleClick={finalHandlerNextFunction}
+                                isDisabled={buttonsDisabled}
                                 last={step === 3 ? true : false}
                             />
                         </footer>)}
