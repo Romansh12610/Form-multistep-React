@@ -91,34 +91,32 @@ export default function FirstStep({ isMakingChanges }) {
         }
     }
 
-    function handleInput(e) {
+    function handleInput(e, pattern) {
 
-        if (e.target.name == 'name') {
-            if (nameRef.current.validity.valid) {
-                nameErrorRef.current.textContent = '';
-            } else {
-                showError(nameRef.current, nameErrorRef.current);
-            }
+        const {value, name} = e.target;
+
+        let currentRef = name === 'name' ? nameRef
+            : name === 'email' ? emailRef
+            : phoneRef;
+
+        let currentErrorRef = name === 'name' ? nameErrorRef
+            : name === 'email' ? emailErrorRef
+            : phoneErrorRef;
+
+        if (name === 'phone') {
+            pattern = /^(\+7|8)\s?(\d{3}[\s-]?){2}(\d{2}[\s-]?){2}$/;
         }
 
-        else if (e.target.name == 'email') {
-            if (emailRef.current.validity.valid) {
-                emailErrorRef.current.textContent = '';
-            } else {
-                showError(emailRef.current, emailErrorRef.current);
-            }
-        }
-
-        else if (e.target.name == 'phone') {
-            if (phoneRef.current.validity.valid) {
-                phoneErrorRef.current.textContent = '';
-            } else {
-                showError(phoneRef.current, phoneErrorRef.current);
-            }
+        if (!value.match(pattern)) {
+            currentRef.current.classList.add('invalid');
+            showError(currentRef.current, currentErrorRef.current, true);
+        } else {
+            currentRef.current.classList.remove('invalid');
+            currentErrorRef.current.textContent = '';
         }
     }
 
-    function showError(input, error) {
+    function showError(input, error, isPatternMismatch = false) {
 
         if (input.validity.valueMissing) {
             error.textContent = 'This field is required';
@@ -128,7 +126,7 @@ export default function FirstStep({ isMakingChanges }) {
             error.textContent = `Your input is too short: current length - ${input.value.length}; expected length - ${input.minLength}`;
         }
 
-        else if (input.validity.patternMismatch) {
+        else if (input.validity.patternMismatch || isPatternMismatch) {
             error.textContent = `You should write a ${input.name} in the correct format, ${input.placeholder}`;
         }
 
@@ -143,8 +141,15 @@ export default function FirstStep({ isMakingChanges }) {
         
         const inputs = document.querySelectorAll('.first-step__input');
         for (let input of inputs) {
-            if (!input.validity.valid) {
+            if (input.classList.contains('invalid')) {
                 input.focus();
+                showError();
+                return;
+            }
+
+            else if (!input.validity.valid) {
+                input.focus();
+                input.classList.add('invalid');
                 return;
             }
         }
@@ -186,7 +191,7 @@ export default function FirstStep({ isMakingChanges }) {
                 handleInput={handleInput}
                 formData={formData}
                 placeHolder='e.g. stephenking@lorem.com'
-                pattern='^.+@[a-zA-Z]+\.[a-zA-Z]{3,5}'
+                pattern='^.+@[a-zA-Z]+\.[a-zA-Z]{2,5}'
                 minLength='8'
                 required='required'
             />
@@ -202,10 +207,7 @@ export default function FirstStep({ isMakingChanges }) {
                 handleChange={handleChange}
                 handleInput={handleInput}
                 formData={formData}
-                placeHolder='e.g. 1 234 567 890'
-                pattern='^\d{1}(\s)\d{3}\1\d{3}\1\d{2}\1\d{2}'
-                minLength='15'
-                maxLength='15'
+                placeHolder='e.g. +8 999-999-99-99'
                 required='required'
             />
             {showPopup && <ConfirmChanges 
@@ -241,7 +243,7 @@ const FormField = forwardRef(({ label, id, type, handleChange, handleInput, form
                 name={id}
                 value={formData?.[id]}
                 onChange={handleChange}
-                onInput={handleInput}
+                onInput={(e) => handleInput(e, pattern)}
                 placeholder={placeHolder}
                 pattern={pattern}
                 minLength={minLength}

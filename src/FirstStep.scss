@@ -78,7 +78,7 @@
             border: 2px solid var(--purplish-blue);
         }
 
-        &:invalid {
+        &:invalid, &.invalid {
             border: 2px solid var(--strawberry-red);
         }
     }

@@ -19,6 +19,7 @@ export default function ConfirmChanges({ setShowPopup, setIsMakeChanges, setButt
     }, []);
 
     // render code
+
     function handleConfirmClick() {
         setShowThanks(true);
         setButtonsDisable(true); 
