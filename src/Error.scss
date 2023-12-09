@@ -8,4 +8,8 @@
     color: var(--strawberry-red);
     display: block;
     height: rem(30);
+
+    &.no-warning {
+        color: green;
+    }
 }

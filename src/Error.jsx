@@ -1,12 +1,16 @@
-import { forwardRef } from 'react';
 import './Error.scss';
 
-export const Error = forwardRef((props, ref) => {
+export const Error = ({ message, isNoWarning }) => {
+
+    let className = 'error-message';
+    if (isNoWarning) className += ' no-warning';
+
     return (
         <span
-            ref={ref}
-            className='error-message'
+            className={className}
             aria-live='polite'
-        ></span>
+        >
+            {message}
+        </span>
     )
-}) 
+}

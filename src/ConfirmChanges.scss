@@ -16,6 +16,15 @@
     box-shadow: rem(0) rem(0) rem(5) rem(5) var(--pastel-blue);
     transition: box-shadow 150ms ease-in-out;
     transform: translateY(rem(-200));
+
+    &.disabled {
+        cursor: not-allowed;
+
+        &:hover {
+            background-color: var(--magnolia);
+            box-shadow: rem(0) rem(0) rem(8) rem(8) var(--strawberry-red);
+        }
+    }
     
     &.animate {
         animation: fallDown linear;

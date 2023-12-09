@@ -1,4 +1,4 @@
-import { useRef, useContext, useEffect, forwardRef, useState } from 'react';
+import { useRef, useContext, useEffect, useState } from 'react';
 import './FirstStep.scss';
 import { Error } from './Error';
 import { InputContext, InputSetterContext, MakeChangesSetterContext, ButtonDisableContext, ButtonSetterContext, StepSetterContext, DesktopContext } from './Contexts';
@@ -15,145 +15,183 @@ export default function FirstStep({ isMakingChanges }) {
     const buttonsDisabled = useContext(ButtonDisableContext);
     const isDesktop = useContext(DesktopContext);
 
-    // refs
-    const nameRef = useRef(null);
-    const emailRef = useRef(null);
-    const phoneRef = useRef(null);
-    const nameErrorRef = useRef(null);
-    const emailErrorRef = useRef(null);
-    const phoneErrorRef = useRef(null);
     const timerId = useRef(null);
 
     // effect 
     useEffect(() => {
-        showError(nameRef.current, nameErrorRef.current);
-        showError(emailRef.current, emailErrorRef.current);
-        showError(phoneRef.current, phoneErrorRef.current);
+        for (const input of document.querySelectorAll('input')) {
+            if (input.validity.valueMissing) {
+                showError(input.name, 'valueMissing');
+            }
+        }
     }, []);
 
     // for popup
     const [showPopup, setShowPopup] = useState(false);
+    const [isPopupDisabled, setIsPopupDisabled] = useState(false);
+
+    const [isErrorNotWarns, setIsErrorNotWarns] = useState({
+        name: false,
+        email: false,
+        phone: false,
+    });
 
     // event handlers
-    function showAcceptedChanges(targetNode, targetName) {
-        const message = "Changes accepted! Hope you do not lie to us...";
-
-        if (targetNode.validity.valid) {
-            switch (targetName) {
-                case "name": {
-                    nameErrorRef.current.style.color = 'green';
-                    nameErrorRef.current.textContent = message;
-                    setTimeout(() => {
-                        nameErrorRef.current.textContent = '';
-                        nameErrorRef.current.style.color = '';
-                    }, 3000);
-                    break;
-                }
-                case "email": {
-                    emailErrorRef.current.style.color = 'green';
-                    emailErrorRef.current.textContent = message;
-                    setTimeout(() => {
-                        emailErrorRef.current.textContent = '';
-                        emailErrorRef.current.style.color = '';
-                    }, 3000);
-                    break;
-                }
-                case "phone": {
-                    phoneErrorRef.current.style.color = 'green';
-                    phoneErrorRef.current.textContent = message;
-                    setTimeout(() => {
-                        phoneErrorRef.current.textContent = '';
-                        phoneErrorRef.current.style.color = '';
-                    }, 3000);
-                    break;
-                }
+    function showAcceptedChanges(name) {
+        const textOfMessage = "Changes accepted! Hope you do not lie to us...";
+        
+        setErrorMessage(prevMessages => {
+            return {
+                ...prevMessages,
+                [name]: textOfMessage
             }
-        }
+        });
+
+        setIsErrorNotWarns(prevWarns => {
+            return {
+                ...prevWarns,
+                [name]: true
+            }
+        });
     }
 
-    function handleChange(e) {
-        const { name, value } = e.target;
+    function handleChange({ target }) {
+        const { name, value } = target;
 
         setFormData({
             ...formData,
             [name]: value,
         });
-
-        if (isMakingChanges) {
-            if (timerId.current != null) {
-                clearTimeout(timerId.current);
-            }
-            timerId.current = setTimeout(() => {
-                showAcceptedChanges(e.target, name);
-            }, 2000);
-
-            setShowPopup(true);
-        }
     }
+
+    // state for checking error message states
+    const [errorMessage, setErrorMessage] = useState({
+        name: '',
+        email: '',
+        phone: ''
+    });
+
+    const [isErrorShowed, setIsErrorShowed] = useState({
+        name: false,
+        email: false,
+        phone: false,
+    });
 
     function handleInput(e, pattern) {
+        const { value, name, validity, placeholder, minLength = '', maxLength = '' } = e.target;
 
-        const {value, name} = e.target;
+        const isValidPattern = pattern.test(value);
+        const isRequiredEmpty = validity.valueMissing;
+        const isTooShort = validity.tooShort;
+        const isTooLong = validity.tooLong;
 
-        let currentRef = name === 'name' ? nameRef
-            : name === 'email' ? emailRef
-            : phoneRef;
-
-        let currentErrorRef = name === 'name' ? nameErrorRef
-            : name === 'email' ? emailErrorRef
-            : phoneErrorRef;
-
-        if (name === 'phone') {
-            pattern = /^(\+7|8)\s?(\d{3}[\s-]?){2}(\d{2}[\s-]?){2}$/;
+        if (isRequiredEmpty) {
+            showError(name, 'valueMissing');
+            if (isMakingChanges) {
+                setIsPopupDisabled(true);
+            }
         }
-
-        if (!value.match(pattern)) {
-            currentRef.current.classList.add('invalid');
-            showError(currentRef.current, currentErrorRef.current, true);
+        else if (!isValidPattern) {
+            showError(name, 'pattern', placeholder);
+            if (isMakingChanges) {
+                setIsPopupDisabled(true);
+            }
+        } 
+        else if (isTooShort) {
+            showError(name, 'tooShort', placeholder, minLength);
+            if (isMakingChanges) {
+                setIsPopupDisabled(true);
+            }
+        }
+        else if (isTooLong) {
+            showError(name, 'tooLong', placeholder, maxLength);
+            if (isMakingChanges) {
+                setIsPopupDisabled(true);
+            }
         } else {
-            currentRef.current.classList.remove('invalid');
-            currentErrorRef.current.textContent = '';
-        }
-    }
+            hideError(name);
+            setIsPopupDisabled(false);
 
-    function showError(input, error, isPatternMismatch = false) {
-
-        if (input.validity.valueMissing) {
-            error.textContent = 'This field is required';
+            if (isMakingChanges) {
+                showAcceptedChanges(name);
+                if (!showPopup) {
+                    setShowPopup(true);
+                }
+            }
         }
+    }    
+
+    // error manipulations
+
+    function showError(targetName, reason, hint, expectedLength) {
+        const errorName = targetName;
+        const textOfMessage = 
+            reason === 'pattern' ? 
+                `You should enter data in correct format, ${hint}`
+            : reason === 'valueMissing' ?
+                `This is mandatory field, you can't ignore it`
+            : reason === 'tooShort' ?x
+                `Your input is too short, we expect minimum ${expectedLength} characters here`
+            :   `Your input is too long, we epect maximum ${expectedLength} characters here`;
         
-        else if (input.validity.tooShort) {
-            error.textContent = `Your input is too short: current length - ${input.value.length}; expected length - ${input.minLength}`;
-        }
-
-        else if (input.validity.patternMismatch || isPatternMismatch) {
-            error.textContent = `You should write a ${input.name} in the correct format, ${input.placeholder}`;
-        }
-
-        else if (input.validity.tooLong) {
-            error.textContent = `Your input is too long: current length - ${input.value.length}; expected length - ${input.maxLength}`;
-        }
-
+        setErrorMessage(prevMessage => {
+            return {
+                ...prevMessage,
+                [errorName]: textOfMessage,
+            }
+        });
+        setIsErrorShowed(prevIsErrorShowed => {
+            return {
+                ...prevIsErrorShowed,
+                [targetName]: true,
+            }
+        });
+        setIsErrorNotWarns(prevWarns => {
+            return {
+                ...prevWarns,
+                [targetName]: false,
+            }
+        });
     }
 
+    function hideError(targetName) {
+        const errorName = targetName;
+
+        setErrorMessage(prevMessage => {
+            return {
+                ...prevMessage,
+                [errorName]: '',
+            }
+        });
+        setIsErrorShowed(prevIsErrorShowed => {
+            return {
+                ...prevIsErrorShowed,
+                [targetName]: false,
+            }
+        })
+    }
+
+
+    // step handling
     function handleFirstStep(e) {
         e.preventDefault();
         
-        const inputs = document.querySelectorAll('.first-step__input');
-        for (let input of inputs) {
-            if (input.classList.contains('invalid')) {
-                input.focus();
-                showError();
-                return;
-            }
-
-            else if (!input.validity.valid) {
-                input.focus();
-                input.classList.add('invalid');
-                return;
-            }
+        if (isErrorShowed.name) {
+            const nameInput = document.getElementById('name');
+            nameInput.focus();
+            return;
         }
-
+        else if (isErrorShowed.email) {
+            const emailInput = document.getElementById('email');
+            emailInput.focus();
+            return;
+        }
+        else if (isErrorShowed.phone) {
+            const phoneInput = document.getElementById('phone');
+            phoneInput.focus();
+            return;
+        }
+        
         setStep(prevStep => prevStep + 1);
         setIsMakeChanges(false);
     }
@@ -166,7 +204,6 @@ export default function FirstStep({ isMakingChanges }) {
                 and phone number
             </p>
             <FormField
-                ref={nameRef} 
                 label='Name'
                 id='name'
                 type='text'
@@ -174,16 +211,18 @@ export default function FirstStep({ isMakingChanges }) {
                 handleInput={handleInput}
                 formData={formData}
                 placeHolder='e.g. Stephen King'
-                pattern='^([A-Z]{1}[a-z]+)\s([A-Z]{1}[a-z]+)'
+                pattern={/^([A-Z]{1}[a-z]+)\s([A-Z]{1}[a-z]+)$/}
                 minLength='6'
+                maxLength='25'
                 required='required'
+                isErrorShowed={isErrorShowed.name}
             />
             <Error
-                required={false} 
-                ref={nameErrorRef}
+                name='name'
+                message={errorMessage.name}
+                isNoWarning={isErrorNotWarns.name}
             />
             <FormField
-                ref={emailRef} 
                 label='Email Address'
                 id='email'
                 type='email'
@@ -191,43 +230,52 @@ export default function FirstStep({ isMakingChanges }) {
                 handleInput={handleInput}
                 formData={formData}
                 placeHolder='e.g. stephenking@lorem.com'
-                pattern='^.+@[a-zA-Z]+\.[a-zA-Z]{2,5}'
+                pattern={/^.+@[a-zA-Z]{4,8}\.[a-z]{2,5}$/}
                 minLength='8'
+                maxLength='25'
                 required='required'
+                isErrorShowed={isErrorShowed.email}
             />
             <Error
-                required={false} 
-                ref={emailErrorRef}
+                name='email'
+                message={errorMessage.email}
+                isNoWarning={isErrorNotWarns.email}
             />
             <FormField
-                ref={phoneRef} 
                 label='Phone Number'
                 id='phone'
                 type='tel'
                 handleChange={handleChange}
                 handleInput={handleInput}
                 formData={formData}
+                pattern={/^(\+7|8)\s?(\d{3}[\s-]?){2}(\d{2}[\s-]?){2}$/}
                 placeHolder='e.g. +8 999-999-99-99'
                 required='required'
+                isErrorShowed={isErrorShowed.phone}
             />
-            {showPopup && <ConfirmChanges 
-                setShowPopup={setShowPopup} 
-                setIsMakeChanges={setIsMakeChanges}
-                setButtonsDisable={setButtonsDisabled}
-            />}
             <Error
-                required={true} 
-                ref={phoneErrorRef}
+                name='phone'
+                message={errorMessage.phone}
+                isNoWarning={isErrorNotWarns.phone}
             />
             {isDesktop && <NextButton 
                 handleClick={handleFirstStep}
                 isDisabled={buttonsDisabled}
             />}
+            {showPopup && <ConfirmChanges
+                isDisabled={isPopupDisabled} 
+                setShowPopup={setShowPopup} 
+                setIsMakeChanges={setIsMakeChanges}
+                setButtonsDisable={setButtonsDisabled}
+            />}
         </div>
     )
 }
 
-const FormField = forwardRef(({ label, id, type, handleChange, handleInput, formData, placeHolder, pattern, minLength, maxLength, required }, ref) => { 
+const FormField = ({ label, id, type, handleChange, handleInput, formData, placeHolder, pattern, minLength, maxLength, required, isErrorShowed }) => { 
+
+    let inputClassName = 'first-step__input';
+    if (isErrorShowed) inputClassName += ' invalid';
 
     return (
         <>
@@ -236,8 +284,7 @@ const FormField = forwardRef(({ label, id, type, handleChange, handleInput, form
                 htmlFor={id}
             >{label}</label>
             <input
-                ref={ref}
-                className='first-step__input' 
+                className={inputClassName} 
                 type={type}
                 id={id}
                 name={id}
@@ -245,11 +292,10 @@ const FormField = forwardRef(({ label, id, type, handleChange, handleInput, form
                 onChange={handleChange}
                 onInput={(e) => handleInput(e, pattern)}
                 placeholder={placeHolder}
-                pattern={pattern}
                 minLength={minLength}
                 maxLength={maxLength}
                 required={required}
             />
         </>
     )
-})
+}
