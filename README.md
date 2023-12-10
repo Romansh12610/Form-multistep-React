@@ -7,4 +7,4 @@ In this project I tried many of popular React features, such as: providing Conte
 Responsive design implemented with media-query-rules, and conditions on useEffect.
 Some animation also included in dedicated component, which "popups" if user makes changes on previous steps of the form.
 
-You can check this project on live url: (Multi-Step Form)[https://romansh12610.github.io/Form-multistep-React/]
+You can check this project on live url: [Multi-Step Form](https://romansh12610.github.io/Form-multistep-React/)
