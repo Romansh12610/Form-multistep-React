@@ -131,7 +131,7 @@ export default function FirstStep({ isMakingChanges }) {
                 `You should enter data in correct format, ${hint}`
             : reason === 'valueMissing' ?
                 `This is mandatory field, you can't ignore it`
-            : reason === 'tooShort' ?x
+            : reason === 'tooShort' ?
                 `Your input is too short, we expect minimum ${expectedLength} characters here`
             :   `Your input is too long, we epect maximum ${expectedLength} characters here`;
         
