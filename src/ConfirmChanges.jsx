@@ -3,7 +3,7 @@ import arrowSvg from './assets/images/arrow-back.svg';
 import './ConfirmChanges.scss';
 import { useContext, useEffect, useRef, useState } from "react";
 
-export default function ConfirmChanges({ setShowPopup, setIsMakeChanges, setButtonsDisable, isPopupDisabled, setIsInputsDisabled }) {
+export default function ConfirmChanges({ setShowPopup, setIsMakeChanges, setButtonsDisable, isPopupDisabled, setIsInputsDisabled = null }) {
     // context & state
     const setStep = useContext(StepSetterContext);
     const [showThanks, setShowThanks] = useState(false);
@@ -40,13 +40,17 @@ export default function ConfirmChanges({ setShowPopup, setIsMakeChanges, setButt
 
         setShowThanks(true);
         setButtonsDisable(true); 
-        setIsInputsDisabled(true);
+        if (setIsInputsDisabled !== null) {
+            setIsInputsDisabled(true);
+        } 
         if (!timeoutRef.current) {
             timeoutRef.current = setTimeout(() => {
                 setIsMakeChanges(false);
                 setButtonsDisable(false);
                 setShowPopup(false);
-                setIsInputsDisabled(false);
+                if (setIsInputsDisabled !== null) {
+                    setIsInputsDisabled(true);
+                } 
                 setStep(3);
             }, 2500);
         }
