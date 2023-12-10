@@ -3,18 +3,10 @@ import arrowSvg from './assets/images/arrow-back.svg';
 import './ConfirmChanges.scss';
 import { useContext, useEffect, useRef, useState } from "react";
 
-export default function ConfirmChanges({ setShowPopup, setIsMakeChanges, setButtonsDisable, isDisabled }) {
+export default function ConfirmChanges({ setShowPopup, setIsMakeChanges, setButtonsDisable, isPopupDisabled, setIsInputsDisabled }) {
     // context & state
     const setStep = useContext(StepSetterContext);
     const [showThanks, setShowThanks] = useState(false);
-
-    let textMessage = 'Accept changes and go back to the confirming step?';
-    let popupClassName = "confirm-popup";
-
-    if (isDisabled) {
-        popupClassName += " disabled";
-        textMessage = 'It seems, you need to correct something...';
-    }
 
     // ref
     const popupRef = useRef(null);
@@ -22,31 +14,39 @@ export default function ConfirmChanges({ setShowPopup, setIsMakeChanges, setButt
 
     // effect
     useEffect(() => {
+
+        if (isPopupDisabled) {
+            popupRef.current.classList.add('disabled');
+        }
+        else if (!isPopupDisabled && popupRef.current.classList.contains('disabled'))  {
+            popupRef.current.classList.remove('disabled');
+        }
+
         setTimeout(() => {
-            popupRef.current.classList.add('animate');
+            if (popupRef.current.classList.contains('animate') == false) {
+                popupRef.current.classList.add('animate');
+            }
+            
         }, 1500);
 
-        return () => {
-            if (popupRef.current.classList.contains('animate')) {
-                popupRef.classList.remove('animate');
-            }
-        }
-    }, [isDisabled]);
+    }, [isPopupDisabled]);
 
     // render code
 
     function handleConfirmClick() {
-        if (isDisabled) {
+        if (isPopupDisabled) {
             return;
         }
 
         setShowThanks(true);
         setButtonsDisable(true); 
+        setIsInputsDisabled(true);
         if (!timeoutRef.current) {
             timeoutRef.current = setTimeout(() => {
                 setIsMakeChanges(false);
                 setButtonsDisable(false);
                 setShowPopup(false);
+                setIsInputsDisabled(false);
                 setStep(3);
             }, 2500);
         }
@@ -54,7 +54,7 @@ export default function ConfirmChanges({ setShowPopup, setIsMakeChanges, setButt
 
     return (
         <div aria-live="polite"
-            className={popupClassName}
+            className="confirm-popup"
             onClick={handleConfirmClick}
             ref={popupRef}
             // accessibility
@@ -62,13 +62,13 @@ export default function ConfirmChanges({ setShowPopup, setIsMakeChanges, setButt
             aria-describedby="warning"
         >
             <p id="warning" className="confirm-popup__p">
-                {textMessage}
+                'Accept changes and go back to the confirming step?'
             </p>
             <img 
                 src={arrowSvg}
                 className="confirm-popup__img"
             />
-            {showThanks && <p className="confirm-popup__thanks">
+            {showThanks && <p className="confirm-popup__thanks" aria-live="polite">
                 Thank you, for getting correct data to us!
             </p>}
         </div>

@@ -15,9 +15,7 @@ export default function FirstStep({ isMakingChanges }) {
     const buttonsDisabled = useContext(ButtonDisableContext);
     const isDesktop = useContext(DesktopContext);
 
-    const timerId = useRef(null);
-
-    // effect 
+    // initial effect to show empty required fields
     useEffect(() => {
         for (const input of document.querySelectorAll('input')) {
             if (input.validity.valueMissing) {
@@ -77,6 +75,8 @@ export default function FirstStep({ isMakingChanges }) {
         phone: false,
     });
 
+    const [isInputsDisabled, setIsInputsDisabled] = useState(false);
+
     function handleInput(e, pattern) {
         const { value, name, validity, placeholder, minLength = '', maxLength = '' } = e.target;
 
@@ -108,7 +108,8 @@ export default function FirstStep({ isMakingChanges }) {
             if (isMakingChanges) {
                 setIsPopupDisabled(true);
             }
-        } else {
+        } 
+        else {
             hideError(name);
             setIsPopupDisabled(false);
 
@@ -216,6 +217,7 @@ export default function FirstStep({ isMakingChanges }) {
                 maxLength='25'
                 required='required'
                 isErrorShowed={isErrorShowed.name}
+                isDisabled={isInputsDisabled}
             />
             <Error
                 name='name'
@@ -235,6 +237,7 @@ export default function FirstStep({ isMakingChanges }) {
                 maxLength='25'
                 required='required'
                 isErrorShowed={isErrorShowed.email}
+                isDisabled={isInputsDisabled}
             />
             <Error
                 name='email'
@@ -252,6 +255,7 @@ export default function FirstStep({ isMakingChanges }) {
                 placeHolder='e.g. +8 999-999-99-99'
                 required='required'
                 isErrorShowed={isErrorShowed.phone}
+                isDisabled={isInputsDisabled}
             />
             <Error
                 name='phone'
@@ -263,7 +267,8 @@ export default function FirstStep({ isMakingChanges }) {
                 isDisabled={buttonsDisabled}
             />}
             {showPopup && <ConfirmChanges
-                isDisabled={isPopupDisabled} 
+                isPopupDisabled={isPopupDisabled}
+                setIsInputsDisabled={setIsInputsDisabled} 
                 setShowPopup={setShowPopup} 
                 setIsMakeChanges={setIsMakeChanges}
                 setButtonsDisable={setButtonsDisabled}
@@ -272,7 +277,7 @@ export default function FirstStep({ isMakingChanges }) {
     )
 }
 
-const FormField = ({ label, id, type, handleChange, handleInput, formData, placeHolder, pattern, minLength, maxLength, required, isErrorShowed }) => { 
+const FormField = ({ label, id, type, handleChange, handleInput, formData, placeHolder, pattern, minLength, maxLength, required, isErrorShowed, isDisabled }) => { 
 
     let inputClassName = 'first-step__input';
     if (isErrorShowed) inputClassName += ' invalid';
@@ -295,6 +300,7 @@ const FormField = ({ label, id, type, handleChange, handleInput, formData, place
                 minLength={minLength}
                 maxLength={maxLength}
                 required={required}
+                disabled={isDisabled}
             />
         </>
     )
